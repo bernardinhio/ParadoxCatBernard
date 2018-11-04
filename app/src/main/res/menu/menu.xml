@@ -6,4 +6,9 @@
         android:title="End game"
         app:showAsAction="always">
     </item>
+    <item
+        android:id="@+id/menu_share_app"
+        android:title="Share App"
+        app:showAsAction="never">
+    </item>
 </menu>

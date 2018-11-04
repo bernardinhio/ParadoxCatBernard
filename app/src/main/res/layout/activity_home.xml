@@ -24,58 +24,68 @@
                 android:textSize="15sp"
                 android:padding="10sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_team_one_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginBottom="10sp"
+                android:layout_margin="10sp"
+                android:padding="5sp"
+                android:textSize="20sp"
+                android:background="@drawable/rectangle_yello_transparent"
+                app:layout_goneMarginBottom="15sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_welcome">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/tiet_team_one_name"
                     android:hint="Nickname of team one..."
-                    android:text="@={homeActivityViewmodel.teamOneName}"
                     android:inputType="text"
-                    android:textColorHint="#000000"
+                    android:textColorHint="@color/bowling_black"
+                    android:textColor="@color/bowling_black"
+                    android:textSize="15sp"
                     android:paddingLeft="10sp"
                     android:fontFamily="sans-serif-condensed"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={homeActivityViewmodel.teamOneName}"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_team_two_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
+                android:layout_margin="10sp"
+                android:padding="5sp"
+                android:textSize="20sp"
+                android:background="@drawable/rectangle_yello_transparent"
                 app:layout_constraintTop_toBottomOf="@id/til_team_one_name">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/tiet_team_two_name"
-                    android:hint="Nickname of team one..."
-                    android:text="@={homeActivityViewmodel.teamTwoName}"
+                    android:hint="Nickname of team Two..."
                     android:inputType="text"
-                    android:textColorHint="#000000"
+                    android:textColorHint="@color/bowling_black"
+                    android:textColor="@color/bowling_black"
+                    android:textSize="15sp"
                     android:paddingLeft="10sp"
                     android:fontFamily="sans-serif-condensed"
-                    android:textSize="15sp"
-                    android:textColor="@color/bowling_black"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={homeActivityViewmodel.teamTwoName}"/>
             </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/bt_start_game"
                 android:text="Start tracking the bowling game!"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textColor="@color/bowling_yellow"
-                android:background="@color/bowling_gray"
+                android:background="@drawable/rectangle_button_dark_gray"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="15sp"
                 android:layout_marginTop="20sp"
                 app:layout_constraintTop_toBottomOf="@id/til_team_two_name"
+                android:padding="10sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 android:onClick="@{(view) -> homeActivityViewmodel.startTrackingBowlingGame(view)}"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="bowling_gray">#4e4e4e</color>
-    <color name="bowling_yellow">#e1ff36</color>
+    <color name="bowling_yellow">#ffd500</color>
     <color name="bowling_black">#000000</color>
     <color name="bowling_white">#FFFFFF</color>
+    <color name="bowling_yello_transparent">#40ffd500</color>
+    <color name="bowling_color_team_one">#fde2b6</color>
+    <color name="bowling_color_team_two">#c5fdb8</color>
+    <color name="bowling_color_blue">#0022ff</color>
 </resources>

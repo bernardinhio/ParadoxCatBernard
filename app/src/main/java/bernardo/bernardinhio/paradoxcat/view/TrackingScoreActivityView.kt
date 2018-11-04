@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 
 import bernardo.bernardinhio.paradoxcat.R
@@ -36,6 +37,12 @@ class TrackingScoreActivityView : AppCompatActivity() {
 
         // use the auto-generated setter of the object inside the tag <variable> in the XML to set the viewModel of that Layout
         activityTrackingScoreBinding.trackingScoreActivityViewmodel = trackingScoreActivityViewmodel
+
+        // close keyboard onStrat
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
+        title = "Bernard"
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -49,6 +56,8 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val itemId = item.itemId
         when (itemId) {
             R.id.menu_end_game -> {
+            }
+            R.id.menu_share_app -> {
             }
         }
         return super.onOptionsItemSelected(item)

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="trackingScoreActivityViewmodel"
             type="bernardo.bernardinhio.paradoxcat.viewmodel.TrackingScoreActivityViewmodel">
@@ -10,174 +11,215 @@
     </data>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@{trackingScoreActivityViewmodel.currentTeam == 1 ? @color/bowling_color_team_one : @color/bowling_color_team_two}">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5sp">
-            <TextView
-                android:id="@+id/frame_number"
-                android:text="Frame - 1"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:gravity="center_horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/team_name"/>
-            <TextView
-                android:id="@+id/team_name"
-                android:text="Team Bernard"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:textColor="@color/bowling_gray"
-                android:gravity="center_horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/frame_number"
-                app:layout_constraintRight_toRightOf="parent"/>
-            <TextView
-                android:id="@+id/first_roll"
-                android:layout_width="0dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="25sp"
-                android:padding="5sp"
-                android:hint="Score?"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                app:layout_constraintTop_toBottomOf="@id/frame_number"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_first_roll_number"/>
-            <TextView
-                android:id="@+id/indication_which_frame_used_first_roll_number"
-                android:layout_width="0dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:text="Used by Frame 3"
-                android:padding="5sp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/first_roll"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/first_roll"
-                app:layout_constraintBottom_toBottomOf="@id/first_roll"
-                android:visibility="invisible"/>
-            <TextView
-                android:id="@+id/second_roll"
-                android:layout_width="0dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="25sp"
-                android:padding="5sp"
-                android:hint="Score?"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                app:layout_constraintTop_toBottomOf="@id/first_roll"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_second_roll_number"/>
-            <TextView
-                android:id="@+id/indication_which_frame_used_second_roll_number"
-                android:layout_width="0dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:text="Used by Frame 3"
-                android:padding="5sp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/second_roll"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/second_roll"
-                app:layout_constraintBottom_toBottomOf="@id/second_roll"
-                android:visibility="invisible"/>
-            <TextView
-                android:id="@+id/is_completed"
-                android:text="Not completed"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/second_roll"
-                app:layout_constraintRight_toLeftOf="@id/frame_category"
-                tool:text="Not completed"/>
-            <TextView
-                android:id="@+id/frame_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/is_completed"
-                app:layout_constraintBottom_toBottomOf="@id/is_completed"
-                app:layout_constraintLeft_toRightOf="@id/is_completed"
-                tool:text="frame category"/>
-            <TextView
-                android:id="@+id/first_bonus"
-                android:text="+ 5 from Frame 3"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@id/is_completed"
-                android:visibility="visible"
-                tool:text="first Bonus"/>
-            <TextView
-                android:id="@+id/second_bonus"
-                android:text="+ 9 from Frame 4"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@id/first_bonus"
-                android:visibility="visible"
-                tool:text="second Bonus"/>
             <ImageView
-                android:id="@+id/score_logo"
+                android:id="@+id/my_score_logo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@drawable/score_logo"
+                android:scaleType="fitXY"
+                android:paddingLeft="5sp"
+                android:paddingRight="5sp"
+                android:src="@drawable/my_score"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/frame_score"
-                app:layout_constraintTop_toTopOf="@id/frame_score"
-                app:layout_constraintBottom_toBottomOf="@id/frame_score"/>
+                app:layout_constraintRight_toLeftOf="@id/my_total_score"
+                app:layout_constraintTop_toTopOf="@id/my_total_score"
+                app:layout_constraintBottom_toBottomOf="@id/my_total_score"/>
             <TextView
-                android:id="@+id/frame_score"
-                android:text="0"
+                android:id="@+id/my_total_score"
+                android:textColor="@color/bowling_black"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/second_bonus"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/score_logo"
-                tool:text="Frame Score"/>
+                app:layout_constraintLeft_toRightOf="@id/my_score_logo"
+                android:text="@{trackingScoreActivityViewmodel.currentTeamTotalScore}"
+                tools:text="My total Score"/>
+            <ImageView
+                android:id="@+id/opponent_score_logo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                android:paddingLeft="5sp"
+                android:paddingRight="5sp"
+                android:src="@drawable/opponent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/opponent_total_score"
+                app:layout_constraintTop_toTopOf="@id/opponent_total_score"
+                app:layout_constraintBottom_toBottomOf="@id/opponent_total_score"/>
             <TextView
-                android:id="@+id/total_score"
-                android:text="total score"
+                android:id="@+id/opponent_total_score"
+                android:textColor="@color/bowling_black"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="25sp"
+                android:textSize="20sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/my_total_score"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/opponent_score_logo"
+                android:text="@{trackingScoreActivityViewmodel.opponentTeamTotalScore}"
+                tools:text="Opponent Score"/>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/frame_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/frame_score"
-                tool:text="Total Score"/>
+                android:layout_margin="10sp"
+                android:padding="10sp"
+                android:background="@drawable/rectangle_transparent_frame"
+                app:layout_constraintTop_toBottomOf="@id/opponent_total_score">
+                <TextView
+                    android:id="@+id/current_frame_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/bowling_black"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="18sp"
+                    android:padding="5sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@{trackingScoreActivityViewmodel.currentFrameNumberAndScore}"/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/first_roll"
+                    android:layout_margin="5sp"
+                    android:padding="5sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bowling_black"
+                    android:hint="Pins"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:background="@drawable/rectangle_white_inside_border_black"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="25sp"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_first_roll_number"
+                    app:layout_constraintTop_toBottomOf="@id/current_frame_info"
+                    android:text="@={trackingScoreActivityViewmodel.firstRoll}"/>
+                <TextView
+                    android:id="@+id/indication_which_frame_used_first_roll_number"
+                    android:layout_width="0dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:padding="5sp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/first_roll"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/first_roll"
+                    app:layout_constraintBottom_toBottomOf="@id/first_roll"
+                    android:visibility="@{trackingScoreActivityViewmodel.firstRollWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.firstRollWasGivenAsBonusToWhichFrame}"/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/second_roll"
+                    android:layout_margin="5sp"
+                    android:padding="5sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bowling_black"
+                    android:hint="Pins"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:background="@drawable/rectangle_white_inside_border_black"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="25sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_second_roll_number"
+                    app:layout_constraintTop_toBottomOf="@id/first_roll"
+                    android:text="@={trackingScoreActivityViewmodel.secondRoll}"/>
+                <TextView
+                    android:id="@+id/indication_which_frame_used_second_roll_number"
+                    android:layout_width="0dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:padding="5sp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/second_roll"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/second_roll"
+                    app:layout_constraintBottom_toBottomOf="@id/second_roll"
+                    android:visibility="@{trackingScoreActivityViewmodel.secondRollWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.secondRollWasGivenAsBonusToWhichFrame}"/>
+                <TextView
+                    android:id="@+id/frame_completed"
+                    android:textColor="@color/bowling_color_blue"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:layout_margin="5sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/second_roll"
+                    app:layout_constraintRight_toLeftOf="@id/frame_category"
+                    android:text="@{trackingScoreActivityViewmodel.frameCompleted}"
+                    tools:text="Not completed"/>
+                <TextView
+                    android:id="@+id/frame_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bowling_color_blue"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:layout_margin="5sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/frame_completed"
+                    app:layout_constraintBottom_toBottomOf="@id/frame_completed"
+                    app:layout_constraintLeft_toRightOf="@id/frame_completed"
+                    android:visibility="@{trackingScoreActivityViewmodel.frameCategory.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.frameCategory}"
+                    tools:text="frame category"/>
+                <TextView
+                    android:id="@+id/first_bonus_received"
+                    android:textColor="@color/bowling_black"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/frame_completed"
+                    android:visibility="@{trackingScoreActivityViewmodel.firstBonusReceived.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.firstBonusReceived}"
+                    tools:text="first Bonus"/>
+                <TextView
+                    android:id="@+id/second_bonus_received"
+                    android:textColor="@color/bowling_black"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/first_bonus_received"
+                    android:visibility="@{trackingScoreActivityViewmodel.secondBonusReceived.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.secondBonusReceived}"
+                    tools:text="second Bonus"/>
+            </android.support.constraint.ConstraintLayout>
             <Button
                 android:id="@+id/bt_to_other_team"
-                android:text="@{trackingScoreActivityViewmodel.textSurfToOtherTeam}"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
                 android:textColor="@color/bowling_white"
-                android:background="@color/bowling_gray"
+                android:background="@drawable/rectangle_button_dark_gray"
+                android:gravity="center_horizontal"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="15sp"
-                android:padding="5sp"
                 android:drawableRight="@drawable/baseline_repeat_white_18dp"
-                android:drawablePadding="0sp"
+                android:drawablePadding="5sp"
                 android:textAllCaps="false"
-                android:layout_marginBottom="7sp"
-                app:layout_constraintTop_toBottomOf="@id/total_score"
+                android:padding="10sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frame_info"
+                android:text="@{trackingScoreActivityViewmodel.textSurfToOtherTeam}"
                 android:onClick="@{(view) -> trackingScoreActivityViewmodel.giveTurnToTheOtherTeam(view)}"
-                tool:text="Save and go to next player"/>
+                tools:text="Save and go to next player"/>
         </android.support.constraint.ConstraintLayout>²
     </ScrollView>
 </layout>
