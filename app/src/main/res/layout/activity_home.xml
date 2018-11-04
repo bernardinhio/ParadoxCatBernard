@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    tools:context=".view.HomeActivityView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="homeActivityViewmodel"
+            type="bernardo.bernardinhio.paradoxcat.viewmodel.HomeActivityViewmodel">
+        </variable>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_welcome"
+                android:gravity="center_horizontal"
+                android:text="This App allows you to track and record the result of your bowling game"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:padding="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_team_one_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginBottom="10sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_welcome">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/tiet_team_one_name"
+                    android:hint="Nickname of team one..."
+                    android:text="@={homeActivityViewmodel.teamOneName}"
+                    android:inputType="text"
+                    android:textColorHint="#000000"
+                    android:paddingLeft="10sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_team_two_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp"
+                app:layout_constraintTop_toBottomOf="@id/til_team_one_name">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/tiet_team_two_name"
+                    android:hint="Nickname of team one..."
+                    android:text="@={homeActivityViewmodel.teamTwoName}"
+                    android:inputType="text"
+                    android:textColorHint="#000000"
+                    android:paddingLeft="10sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="15sp"
+                    android:textColor="@color/bowling_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/bt_start_game"
+                android:text="Start tracking the bowling game!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/bowling_yellow"
+                android:background="@color/bowling_gray"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:layout_marginTop="20sp"
+                app:layout_constraintTop_toBottomOf="@id/til_team_two_name"
+                android:onClick="@{(view) -> homeActivityViewmodel.startTrackingBowlingGame(view)}"/>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>

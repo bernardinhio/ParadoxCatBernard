@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="trackingScoreActivityViewmodel"
+            type="bernardo.bernardinhio.paradoxcat.viewmodel.TrackingScoreActivityViewmodel">
+        </variable>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5sp">
+            <TextView
+                android:id="@+id/frame_number"
+                android:text="Frame - 1"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/team_name"/>
+            <TextView
+                android:id="@+id/team_name"
+                android:text="Team Bernard"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:textColor="@color/bowling_gray"
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/frame_number"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:id="@+id/first_roll"
+                android:layout_width="0dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="25sp"
+                android:padding="5sp"
+                android:hint="Score?"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle"
+                app:layout_constraintTop_toBottomOf="@id/frame_number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_first_roll_number"/>
+            <TextView
+                android:id="@+id/indication_which_frame_used_first_roll_number"
+                android:layout_width="0dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:text="Used by Frame 3"
+                android:padding="5sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/first_roll"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/first_roll"
+                app:layout_constraintBottom_toBottomOf="@id/first_roll"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/second_roll"
+                android:layout_width="0dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="25sp"
+                android:padding="5sp"
+                android:hint="Score?"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle"
+                app:layout_constraintTop_toBottomOf="@id/first_roll"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_second_roll_number"/>
+            <TextView
+                android:id="@+id/indication_which_frame_used_second_roll_number"
+                android:layout_width="0dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:text="Used by Frame 3"
+                android:padding="5sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/second_roll"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/second_roll"
+                app:layout_constraintBottom_toBottomOf="@id/second_roll"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/is_completed"
+                android:text="Not completed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/second_roll"
+                app:layout_constraintRight_toLeftOf="@id/frame_category"
+                tool:text="Not completed"/>
+            <TextView
+                android:id="@+id/frame_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/is_completed"
+                app:layout_constraintBottom_toBottomOf="@id/is_completed"
+                app:layout_constraintLeft_toRightOf="@id/is_completed"
+                tool:text="frame category"/>
+            <TextView
+                android:id="@+id/first_bonus"
+                android:text="+ 5 from Frame 3"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@id/is_completed"
+                android:visibility="visible"
+                tool:text="first Bonus"/>
+            <TextView
+                android:id="@+id/second_bonus"
+                android:text="+ 9 from Frame 4"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@id/first_bonus"
+                android:visibility="visible"
+                tool:text="second Bonus"/>
+            <ImageView
+                android:id="@+id/score_logo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/score_logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/frame_score"
+                app:layout_constraintTop_toTopOf="@id/frame_score"
+                app:layout_constraintBottom_toBottomOf="@id/frame_score"/>
+            <TextView
+                android:id="@+id/frame_score"
+                android:text="0"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="25sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/second_bonus"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/score_logo"
+                tool:text="Frame Score"/>
+            <TextView
+                android:id="@+id/total_score"
+                android:text="total score"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="25sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/frame_score"
+                tool:text="Total Score"/>
+            <Button
+                android:id="@+id/bt_to_other_team"
+                android:text="@{trackingScoreActivityViewmodel.textSurfToOtherTeam}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bowling_white"
+                android:background="@color/bowling_gray"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:padding="5sp"
+                android:drawableRight="@drawable/baseline_repeat_white_18dp"
+                android:drawablePadding="0sp"
+                android:textAllCaps="false"
+                android:layout_marginBottom="7sp"
+                app:layout_constraintTop_toBottomOf="@id/total_score"
+                android:onClick="@{(view) -> trackingScoreActivityViewmodel.giveTurnToTheOtherTeam(view)}"
+                tool:text="Save and go to next player"/>
+        </android.support.constraint.ConstraintLayout>²
+    </ScrollView>
+</layout>
