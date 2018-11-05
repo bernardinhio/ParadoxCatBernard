@@ -23,6 +23,7 @@ class TrackingScoreActivityView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracking_score)
 
+        // get names of teams passed from launcher Activity
         val intent = this.intent
         if (intent != null) {
             teamOneName = intent.getStringExtra(HomeActivityViewmodel.TEAM_ONE_NAME)

@@ -65,6 +65,27 @@
                 app:layout_constraintLeft_toRightOf="@id/opponent_score_logo"
                 android:text="@{trackingScoreActivityViewmodel.opponentTeamTotalScore}"
                 tools:text="Opponent Score"/>
+            <Button
+                android:id="@+id/bt_to_other_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:textColor="@color/bowling_white"
+                android:background="@drawable/rectangle_button_dark_gray"
+                android:gravity="center_horizontal"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15sp"
+                android:drawableRight="@drawable/baseline_repeat_white_18dp"
+                android:drawablePadding="5sp"
+                android:textAllCaps="false"
+                android:padding="10sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/opponent_total_score"
+                android:text="@{trackingScoreActivityViewmodel.textSurfToOtherTeam}"
+                android:onClick="@{(view) -> trackingScoreActivityViewmodel.giveTurnToTheOtherTeam(view)}"
+                android:enabled="@{trackingScoreActivityViewmodel.submitEnabled}"
+                tools:text="Save and go to next player"/>
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/frame_info"
                 android:layout_width="match_parent"
@@ -72,7 +93,7 @@
                 android:layout_margin="10sp"
                 android:padding="10sp"
                 android:background="@drawable/rectangle_transparent_frame"
-                app:layout_constraintTop_toBottomOf="@id/opponent_total_score">
+                app:layout_constraintTop_toBottomOf="@id/bt_to_other_team">
                 <TextView
                     android:id="@+id/current_frame_info"
                     android:layout_width="match_parent"
@@ -83,7 +104,8 @@
                     android:textSize="18sp"
                     android:padding="5sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@{trackingScoreActivityViewmodel.currentFrameNumberAndScore}"/>
+                    android:text="@{trackingScoreActivityViewmodel.currentFrameNumberAndScore}"
+                    tools:text="Frame number and frame score"/>
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/first_roll"
                     android:layout_margin="5sp"
@@ -101,7 +123,9 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_first_roll_number"
                     app:layout_constraintTop_toBottomOf="@id/current_frame_info"
-                    android:text="@={trackingScoreActivityViewmodel.firstRoll}"/>
+                    android:text="@={trackingScoreActivityViewmodel.firstRoll}"
+                    android:afterTextChanged="@{(editable) -> trackingScoreActivityViewmodel.afterTextChangedFirstRoll(editable)}"
+                    android:enabled="@{trackingScoreActivityViewmodel.firstRollEnabled}"/>
                 <TextView
                     android:id="@+id/indication_which_frame_used_first_roll_number"
                     android:layout_width="0dp"
@@ -113,8 +137,9 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/first_roll"
                     app:layout_constraintBottom_toBottomOf="@id/first_roll"
-                    android:visibility="@{trackingScoreActivityViewmodel.firstRollWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
-                    android:text="@{trackingScoreActivityViewmodel.firstRollWasGivenAsBonusToWhichFrame}"/>
+                    android:visibility="@{trackingScoreActivityViewmodel.firstRollInfoOrWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.firstRollInfoOrWasGivenAsBonusToWhichFrame}"
+                    tools:text="which frame used it as bonus"/>
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/second_roll"
                     android:layout_margin="5sp"
@@ -131,6 +156,8 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/indication_which_frame_used_second_roll_number"
                     app:layout_constraintTop_toBottomOf="@id/first_roll"
+                    android:visibility="@{trackingScoreActivityViewmodel.showSecondRollEntry ? View.VISIBLE : View.INVISIBLE}"
+                    android:enabled="@{trackingScoreActivityViewmodel.secondRollEnabled}"
                     android:text="@={trackingScoreActivityViewmodel.secondRoll}"/>
                 <TextView
                     android:id="@+id/indication_which_frame_used_second_roll_number"
@@ -143,8 +170,9 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/second_roll"
                     app:layout_constraintBottom_toBottomOf="@id/second_roll"
-                    android:visibility="@{trackingScoreActivityViewmodel.secondRollWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
-                    android:text="@{trackingScoreActivityViewmodel.secondRollWasGivenAsBonusToWhichFrame}"/>
+                    android:visibility="@{trackingScoreActivityViewmodel.secondRollInfoAndWasGivenAsBonusToWhichFrame.empty != true ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{trackingScoreActivityViewmodel.secondRollInfoAndWasGivenAsBonusToWhichFrame}"
+                    tools:text="which frame used it as bonus"/>
                 <TextView
                     android:id="@+id/frame_completed"
                     android:textColor="@color/bowling_color_blue"
@@ -200,26 +228,6 @@
                     android:text="@{trackingScoreActivityViewmodel.secondBonusReceived}"
                     tools:text="second Bonus"/>
             </android.support.constraint.ConstraintLayout>
-            <Button
-                android:id="@+id/bt_to_other_team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:textColor="@color/bowling_white"
-                android:background="@drawable/rectangle_button_dark_gray"
-                android:gravity="center_horizontal"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:drawableRight="@drawable/baseline_repeat_white_18dp"
-                android:drawablePadding="5sp"
-                android:textAllCaps="false"
-                android:padding="10sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/frame_info"
-                android:text="@{trackingScoreActivityViewmodel.textSurfToOtherTeam}"
-                android:onClick="@{(view) -> trackingScoreActivityViewmodel.giveTurnToTheOtherTeam(view)}"
-                tools:text="Save and go to next player"/>
         </android.support.constraint.ConstraintLayout>²
     </ScrollView>
 </layout>
