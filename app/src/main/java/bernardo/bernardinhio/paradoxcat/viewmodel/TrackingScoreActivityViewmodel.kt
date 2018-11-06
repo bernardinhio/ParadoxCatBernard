@@ -71,11 +71,11 @@ class TrackingScoreActivityViewmodel(
             if (!firstRoll.isEmpty()){
                 when(firstRoll.toInt()){
                     in 0..9 -> {
-                        firstRollInfo = "Oh notot all of them! \nLater you try 2nd Roll !"
+                        firstRollInfo = "Oh notot all of the Pins! \nLater you try 2nd Roll !"
                         submitEnabled = true
                     }
                     10 -> {
-                        firstRollInfo = "Nice Strike !! \n10 Pins in 1 Roll !"
+                        firstRollInfo = "Nice STRIKE !! \n10 Pins in 1 Roll !"
                         submitEnabled = true
                     }
                     in 11..99 -> {
@@ -94,7 +94,7 @@ class TrackingScoreActivityViewmodel(
 
     fun submitEntry(view : View){
         // After the first Roll is finished and its value is valid between 0 and 10
-        if (firstRoll.toInt()in 0..10 && !secondRollEnabled){
+        if (!secondRollEnabled && firstRoll.toInt()in 0..10){
 
             when(firstRoll.toInt()){
                 10 -> {
@@ -125,15 +125,14 @@ class TrackingScoreActivityViewmodel(
                     this.notifyChange()
 
                     // go to next player
-
                     Toast.makeText(view.context,
-                            "Other Player",
+                            "Save Roll 1 \n Go to other Player",
                             Toast.LENGTH_SHORT).show()
                 }
                 in 0..9 -> {
 
                     // after Roll 1 finished but player didn't hit all Pins, indicate to player to give turn to next player
-                    textSurfToOtherTeam = "Save the 2nd Roll for this Frame $currentTeamFrameNumber \nand continue the game"
+                    textSurfToOtherTeam = "Enter 2nd Roll for Frame $currentTeamFrameNumber \nand continue the game !"
                     // Enable this button after player enters the right input for Roll 2
                     submitEnabled = false
 
@@ -151,7 +150,6 @@ class TrackingScoreActivityViewmodel(
                     this.notifyChange()
 
                     // now the player enters the score for the 2nd frame
-
                     Toast.makeText(view.context,
                             "ENTER 2nd Roll",
                             Toast.LENGTH_SHORT).show()
@@ -160,18 +158,31 @@ class TrackingScoreActivityViewmodel(
         }
 
         // after the player enter the 2nd Roll and has already saved & entered the 1st Roll
-        if (!secondRoll.isEmpty() && submitEnabled){
+        if (secondRollEnabled && !secondRoll.isEmpty() && !firstRollEnabled){
 
+            // keep Roll 2 but disable it
+            secondRollRightIsGivenToPlayer = true
+            secondRollEnabled = false
+            secondRollFinished = true
+            secondRollInfo = ""
+
+            // calculate & show result for current score
+            frameCompleted = "Is completed !"
+            currentTeamFrameScore = (firstRoll.toInt() + secondRoll.toInt()).toString()
+            frameCategory = if (currentTeamFrameScore.toInt() == 10)"Spare" else "Open"
+            currentFrameInfoNumberAndScore= "Frame $currentTeamFrameNumber ------> Score: $currentTeamFrameScore"
+
+            // calculate & show total score for current team
+            currentTeamTotalScore = currentTeamFrameScore
             // after the 2nd Rolls is enter and user clicks on Button
-            textSurfToOtherTeam = "Save the score for this Frame $currentTeamFrameNumber \nand go to $teamOneName"
-            submitEnabled = false
+            textSurfToOtherTeam = "Save this Frame $currentTeamFrameNumber \nand go to next team $teamOneName"
+            submitEnabled = true
 
             this.notifyChange()
 
             // now player gives turn to other Player
-
             Toast.makeText(view.context,
-                    "Next playerl",
+                    "2nd Roll completed \n1st Roll completed \ngo to Next playerl",
                     Toast.LENGTH_SHORT).show()
         }
     }
@@ -184,23 +195,27 @@ class TrackingScoreActivityViewmodel(
             // first time Roll 2 is used
             if (!secondRoll.isEmpty()){
                 val remainingPins = 10 - firstRoll.toInt()
-                val moreThanRemainingPins = remainingPins + 1
                 when(secondRoll.toInt()){
-                    in 0..remainingPins -> {
+                    in 0..(remainingPins - 1) -> {
                         secondRollInfo = "Didn't get all the Pins in \n2 Rolls? Bad luck !"
+                        // after the 2nd Rolls is enter
+                        textSurfToOtherTeam = "Save 2nd Roll and save this Frame $currentTeamFrameNumber"
                         submitEnabled = true
                     }
                     remainingPins -> {
-                        secondRollInfo = "Nice Spare !! \n10 Pins in 2 Rolls!"
+                        secondRollInfo = "Nice SPARE !! \n10 Pins in 2 Rolls!"
+                        textSurfToOtherTeam = "Save 2nd Roll and save this Frame $currentTeamFrameNumber"
                         submitEnabled = true
                     }
-                    in moreThanRemainingPins..99 -> {
-                        secondRollInfo = "can't be above 10 !"
+                    in (remainingPins + 1)..99 -> {
+                        secondRollInfo = "can't be above $remainingPins !"
+                        textSurfToOtherTeam = "Enter the 2nd Roll for Frame $currentTeamFrameNumber \nand continue the game !"
                         submitEnabled = false
                     }
                 }
             } else {
                 secondRollInfo = "How many Pins you hit?"
+                textSurfToOtherTeam = "Enter the 2nd Roll for Frame $currentTeamFrameNumber \nand continue the game !"
                 submitEnabled = false
             }
             this.notifyChange()
