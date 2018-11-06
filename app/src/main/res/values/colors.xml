@@ -3,7 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="bowling_gray">#4e4e4e</color>
+    <color name="bowling_gray_color_enabled">#595959</color>
+    <color name="bowling_gray_color_disabled">#818080</color>
+    <color name="bowling_gray_color_pressed">#403636</color>
+    <color name="bowling_gray_color_light">#d9d9d9</color>
     <color name="bowling_yellow">#ffd500</color>
     <color name="bowling_black">#000000</color>
     <color name="bowling_white">#FFFFFF</color>

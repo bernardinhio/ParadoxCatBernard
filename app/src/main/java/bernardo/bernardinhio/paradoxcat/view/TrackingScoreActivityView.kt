@@ -2,10 +2,14 @@ package bernardo.bernardinhio.paradoxcat.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.Toast
 
 import bernardo.bernardinhio.paradoxcat.R
@@ -15,8 +19,8 @@ import bernardo.bernardinhio.paradoxcat.viewmodel.TrackingScoreActivityViewmodel
 
 class TrackingScoreActivityView : AppCompatActivity() {
 
-    private var teamOneName: String? = null
-    private var teamTwoName: String? = null
+    private var teamOneName: String = ""
+    private var teamTwoName: String = ""
     private val shouldAllowBack = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +38,7 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val activityTrackingScoreBinding = DataBindingUtil.setContentView<ActivityTrackingScoreBinding>(this@TrackingScoreActivityView, R.layout.activity_tracking_score)
 
         // create a viewmodel object
-        val trackingScoreActivityViewmodel = TrackingScoreActivityViewmodel()
+        val trackingScoreActivityViewmodel = TrackingScoreActivityViewmodel(teamOneName,teamTwoName)
 
         // use the auto-generated setter of the object inside the tag <variable> in the XML to set the viewModel of that Layout
         activityTrackingScoreBinding.trackingScoreActivityViewmodel = trackingScoreActivityViewmodel

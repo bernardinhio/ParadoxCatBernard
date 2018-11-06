@@ -73,12 +73,12 @@
             </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/bt_start_game"
-                android:text="Start tracking the bowling game!"
+                android:text="@string/label_button_starter_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textColor="@color/bowling_yellow"
-                android:background="@drawable/rectangle_button_dark_gray"
+                android:background="@drawable/button_submit"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="15sp"
                 android:layout_marginTop="20sp"
