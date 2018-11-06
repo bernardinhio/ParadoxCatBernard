@@ -1,15 +1,13 @@
 package bernardo.bernardinhio.paradoxcat.view
 
+import android.app.Activity
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.Toast
 
 import bernardo.bernardinhio.paradoxcat.R
@@ -32,6 +30,9 @@ class TrackingScoreActivityView : AppCompatActivity() {
         if (intent != null) {
             teamOneName = intent.getStringExtra(HomeActivityViewmodel.TEAM_ONE_NAME)
             teamTwoName = intent.getStringExtra(HomeActivityViewmodel.TEAM_TWO_NAME)
+
+            if (teamOneName.isEmpty()) teamOneName = "Team-1"
+            if (teamTwoName.isEmpty()) teamTwoName = "Team-2"
         }
 
         // initialize the auto-generated databinded Class from the layout used to inflate this view using DataBindingUtil
@@ -41,14 +42,17 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val trackingScoreActivityViewmodel = TrackingScoreActivityViewmodel(teamOneName,teamTwoName)
 
         // use the auto-generated setter of the object inside the tag <variable> in the XML to set the viewModel of that Layout
-        activityTrackingScoreBinding.trackingScoreActivityViewmodel = trackingScoreActivityViewmodel
+        activityTrackingScoreBinding.viewModel = trackingScoreActivityViewmodel
 
         // close keyboard onStrat
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        title = "Bernard"
+        // start with Team-1
+        title = teamOneName
 
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
