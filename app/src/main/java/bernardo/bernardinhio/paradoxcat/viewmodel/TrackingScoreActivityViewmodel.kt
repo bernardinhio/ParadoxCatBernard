@@ -177,9 +177,6 @@ class TrackingScoreActivityViewmodel(
         frameScore = "10"
         frameTitleInfo= "Frame $currentFrameNumber ------> Score: $frameScore"
 
-        // calculate & show total score for current team
-        calculateScoresForActiveTeamAndOpponentTeam()
-
         this.notifyChange()
 
         closeKeyboard(view)
@@ -189,6 +186,9 @@ class TrackingScoreActivityViewmodel(
                 Toast.LENGTH_SHORT).show()
 
         addCompletedFrameObjectToList()
+
+        // calculate & show total score for current team
+        calculateScoresForActiveTeamAndOpponentTeam()
 
 
     }
@@ -248,9 +248,6 @@ class TrackingScoreActivityViewmodel(
         messageFirstBonus = if (frameScore.toInt() == 10) "You will have a 1st Bonus !" else ""
         frameTitleInfo = "Frame $currentFrameNumber ------> Score: $frameScore"
 
-        // calculate & show total score for current team
-        calculateScoresForActiveTeamAndOpponentTeam()
-
         // after the 2nd Rolls is enter and user clicks on Button
         messageSubmitButton = "Save this Frame $currentFrameNumber \nand go to next team ${if (activeTeamNumber == 1) teamTwoName else teamOneName}"
         submitEnabled = true
@@ -266,6 +263,8 @@ class TrackingScoreActivityViewmodel(
 
         addCompletedFrameObjectToList()
 
+        // calculate & show total score for current team
+        calculateScoresForActiveTeamAndOpponentTeam()
     }
 
 
@@ -286,12 +285,16 @@ class TrackingScoreActivityViewmodel(
         )
         when(activeTeamNumber){
             1 -> {
-                teamOneFramesList.add(frame)
-                frameIsCompletedAndSaved = true
+                if (teamOneFramesList.size <= 10){
+                    teamOneFramesList.add(frame)
+                    frameIsCompletedAndSaved = true
+                }
             }
             2 -> {
-                teamTwoFramesList.add(frame)
-                frameIsCompletedAndSaved = true
+                if (teamTwoFramesList.size <= 10){
+                    teamTwoFramesList.add(frame)
+                    frameIsCompletedAndSaved = true
+                }
             }
         }
     }
@@ -346,54 +349,67 @@ class TrackingScoreActivityViewmodel(
         messageFirstBonus = ""
         messageSecondBonus = ""
 
+        // update the UI by switching current player and opponent player score
+        calculateScoresForActiveTeamAndOpponentTeam()
+
         this.notifyChange()
     }
 
 
     private fun calculateScoresForActiveTeamAndOpponentTeam(){
-
+        // by default for team1 we use the ArrayList1 and for team2 we use the ArrayList2
         when(activeTeamNumber){
+            // activeTeamTotalScore is in ArrayList1 and opponentTeamTotalScore in ArrayList2
             1 -> {
+                // calculate the activeTeamTotalScore
                 if(teamOneFramesList.size > 0){
-                    var totalScore = activeTeamTotalScore.toInt()
-                    for (position in 0..10){
-                        totalScore += teamOneFramesList.get(position).score
+                    var totalScore = 0
+                    for (frame in teamOneFramesList){
+                        totalScore += frame.score
                     }
                     activeTeamTotalScore = totalScore.toString()
                 } else {
+                    // when it's the first frame and team1 didn't add the Frame to the ArrayList yet because not all of its values are ready except the frame score which we have and we want to display
                     activeTeamTotalScore = frameScore
                 }
+                // calculate the opponentTeamTotalScore
                 if(teamTwoFramesList.size > 0){
-                    var totalScore = opponentTeamTotalScore.toInt()
-                    for (position in 0..10){
-                        totalScore += teamTwoFramesList.get(position).score
+                    var totalScore = 0
+                    for (frame in teamTwoFramesList){
+                        totalScore += frame.score
                     }
                     opponentTeamTotalScore = totalScore.toString()
                 } else {
+                    // when it's the first frame and the opponent didn't play yet
                     opponentTeamTotalScore = "0"
                 }
             }
+            // activeTeamTotalScore is in ArrayList2 and opponentTeamTotalScore in ArrayList1
             2 -> {
+                // calculate the activeTeamTotalScore
+                if(teamTwoFramesList.size > 0){
+                    var totalScore = 0
+                    for (frame in teamTwoFramesList){
+                        totalScore += frame.score
+                    }
+                    activeTeamTotalScore = totalScore.toString()
+                } else {
+                    // when it's the first frame and team1 didn't add the Frame to the ArrayList yet because not all of its values are ready except the frame score which we have and we want to display
+                    activeTeamTotalScore = frameScore
+                }
+                // calculate the opponentTeamTotalScore
                 if(teamOneFramesList.size > 0){
-                    var totalScore = opponentTeamTotalScore.toInt()
-                    for (position in 0..10){
-                        totalScore += teamOneFramesList.get(position).score
+                    var totalScore = 0
+                    for (frame in teamOneFramesList){
+                        totalScore += frame.score
                     }
                     opponentTeamTotalScore = totalScore.toString()
                 } else {
                     opponentTeamTotalScore = "0"
-                }
-                if(teamTwoFramesList.size > 0){
-                    var totalScore = activeTeamTotalScore.toInt()
-                    for (position in 0..10){
-                        totalScore += teamTwoFramesList.get(position).score
-                    }
-                    activeTeamTotalScore = totalScore.toString()
-                } else {
-                    activeTeamTotalScore = frameScore
                 }
             }
         }
+        this.notifyChange()
     }
 
 
