@@ -2,7 +2,7 @@ package bernardo.bernardinhio.paradoxcat
 
 class Frame(
         val number : Int = 1,
-        val score : Int = 0,
+        var score : Int = 0,
         val category : String = "",
         val textIsFrameCompleted : String = "",
         val titleInfo : String = "",
@@ -12,23 +12,26 @@ class Frame(
         val secondRollInfo : String = "",
         val teamName : String = "",
         val teamTotalScore : Int = 0,
-        val firstBonus : Bonus = Bonus(),
-        val secondBonus : Bonus = Bonus()
+        var needsFirstBonus : Boolean = false,
+        var needsSecondBonus : Boolean = false,
+        var firstBonus : Bonus = Bonus(),
+        var secondBonus : Bonus = Bonus()
 ){
 
 }
 
-enum class Category(val categoryName : String){
+enum class FrameCategory(val categoryName : String){
+    DEFAULT(""),
     STRIKE("Strike"),
     SPARE("Spare"),
     CLOSED("Closed")
 }
 
 class Bonus(
-        val points : Int = 0,
-        val frameNumber : Int = 0,
-        val fromFrameRoll : Int = 1
+        var points : Int = 0,
+        var frameNumber : Int = 0,
+        var fromFrameRoll : Int = 1,
+        var bonusMessage : String = ""
 ){
 
 }
-

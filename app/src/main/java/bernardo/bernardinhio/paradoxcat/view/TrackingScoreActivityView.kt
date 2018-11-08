@@ -1,7 +1,5 @@
 package bernardo.bernardinhio.paradoxcat.view
 
-import android.app.Activity
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -33,6 +31,8 @@ class TrackingScoreActivityView : AppCompatActivity() {
 
             if (teamOneName.isEmpty()) teamOneName = "Team-1"
             if (teamTwoName.isEmpty()) teamTwoName = "Team-2"
+
+            Toast.makeText(this, "Your name: $teamOneName \n\n Opponent's name: $teamTwoName", Toast.LENGTH_LONG).show()
         }
 
         // initialize the auto-generated databinded Class from the layout used to inflate this view using DataBindingUtil
@@ -47,12 +47,9 @@ class TrackingScoreActivityView : AppCompatActivity() {
         // close keyboard onStrat
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        // start with Team-1
+        // start the game with Team-1
         title = teamOneName
-
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
@@ -65,8 +62,11 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val itemId = item.itemId
         when (itemId) {
             R.id.menu_end_game -> {
+                finish()
+                Toast.makeText(this, "See you later !", Toast.LENGTH_LONG).show()
             }
             R.id.menu_share_app -> {
+                // share url googleplay with other Apps
             }
         }
         return super.onOptionsItemSelected(item)

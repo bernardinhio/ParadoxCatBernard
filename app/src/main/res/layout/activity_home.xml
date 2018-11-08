@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="homeActivityViewmodel"
+            name="viewModel"
             type="bernardo.bernardinhio.paradoxcat.viewmodel.HomeActivityViewmodel">
         </variable>
     </data>
@@ -47,7 +47,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={homeActivityViewmodel.teamOneName}"/>
+                    android:text="@={viewModel.teamOneName}"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_team_two_name"
@@ -69,7 +69,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={homeActivityViewmodel.teamTwoName}"/>
+                    android:text="@={viewModel.teamTwoName}"/>
             </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/bt_start_game"
@@ -86,7 +86,7 @@
                 android:padding="10sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:onClick="@{(view) -> homeActivityViewmodel.startTrackingBowlingGame(view)}"/>
+                android:onClick="@{(view) -> viewModel.startTrackingBowlingGame(view)}"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </layout>

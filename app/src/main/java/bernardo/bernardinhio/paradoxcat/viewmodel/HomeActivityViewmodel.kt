@@ -23,11 +23,5 @@ class HomeActivityViewmodel(
         intent.putExtra(TEAM_TWO_NAME, teamTwoName)
 
         view.context.startActivities(arrayOf(intent))
-
-        /**
-        Toast.makeText(view.context,
-                "HELLO $teamOneName $teamTwoName",
-                Toast.LENGTH_SHORT).show()
-        **/
     }
 }
