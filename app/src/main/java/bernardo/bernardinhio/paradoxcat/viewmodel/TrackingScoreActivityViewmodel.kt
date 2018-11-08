@@ -192,7 +192,7 @@ class TrackingScoreActivityViewmodel(
 
         addCompletedFrameObjectToList()
 
-        checkActiveTeamPreviousFramesIfTheyNeedBonus(firstRoll.toInt(), frameNumber, 1)
+        updatePreviousFramesBonuses(firstRoll.toInt(), frameNumber, 1)
 
         calculateScoresForActiveTeamAndOpponentTeamAfterCheckingIfActiveTeamPreviousFramesNeedBonus()
 
@@ -229,7 +229,7 @@ class TrackingScoreActivityViewmodel(
         frameScore = firstRoll
         frameTitleInfo= "Frame $frameNumber ------> Score: $frameScore"
 
-        checkActiveTeamPreviousFramesIfTheyNeedBonus(firstRoll.toInt(), frameNumber, 1)
+        updatePreviousFramesBonuses(firstRoll.toInt(), frameNumber, 1)
 
         calculateScoresForActiveTeamAndOpponentTeamAfterCheckingIfActiveTeamPreviousFramesNeedBonus()
 
@@ -259,7 +259,7 @@ class TrackingScoreActivityViewmodel(
 
         addCompletedFrameObjectToList()
 
-        checkActiveTeamPreviousFramesIfTheyNeedBonus(secondRoll.toInt(), frameNumber, 2)
+        updatePreviousFramesBonuses(secondRoll.toInt(), frameNumber, 2)
 
         calculateScoresForActiveTeamAndOpponentTeamAfterCheckingIfActiveTeamPreviousFramesNeedBonus()
 
@@ -274,13 +274,16 @@ class TrackingScoreActivityViewmodel(
         var needsFirstBonus : Boolean = false
         var needsSecondBonus : Boolean = false
         when(frameCategory){
-            FrameCategory.DEFAULT.categoryName -> { }
             FrameCategory.STRIKE.categoryName -> {
                 needsFirstBonus = true
                 needsSecondBonus = true
             }
             FrameCategory.SPARE.categoryName -> {
                 needsFirstBonus = true
+            }
+            else -> {
+                needsFirstBonus = false
+                needsSecondBonus = false
             }
         }
         val frame : Frame = Frame(
@@ -423,7 +426,7 @@ class TrackingScoreActivityViewmodel(
     }
 
 
-    private fun checkActiveTeamPreviousFramesIfTheyNeedBonus(points : Int, frameNumber : Int, fromFrameRoll : Int){
+    private fun updatePreviousFramesBonuses(points : Int, frameNumber : Int, fromFrameRoll : Int){
         when(activeTeamNumber){
             1 -> { // activeTeam is team1 and team1 always uses ArrayList1
                 updatePreviousFramesBonuses(teamOneFramesList, points, frameNumber, fromFrameRoll)
@@ -440,38 +443,32 @@ class TrackingScoreActivityViewmodel(
             val currentFrameInList = teamFramesList.last()
             val currentPositionInList = teamFramesList.indexOf(currentFrameInList)
             val previousPositionInList = currentPositionInList - 1
-            for (index in previousPositionInList downTo 0){
+            for (index in 0..previousPositionInList){
                 val frame : Frame = teamFramesList.get(index)
-                if (frame.category == FrameCategory.SPARE.categoryName && frame.needsFirstBonus && points != 0){
+                if (points != 0 && frame.needsSecondBonus){
+                    frame.secondBonus.points = points
+                    frame.secondBonus.frameNumber = frameNumber
+                    frame.secondBonus.fromFrameRoll = fromFrameRoll
+                    frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+                    frame.needsSecondBonus = false
+                    frame.score = frame.score + frame.secondBonus.points + + frame.firstBonus.points
+                    Log.d("previousFrames", "#$index is Strike and took $points as 2nd Bonus")
+                    break
+                } else if (points != 0 && frame.needsFirstBonus){
                     frame.firstBonus.points = points
                     frame.firstBonus.frameNumber = frameNumber
                     frame.firstBonus.fromFrameRoll = fromFrameRoll
                     frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
                     frame.needsFirstBonus = false
-                    frame.score = frame.score + + frame.firstBonus.points
+                    frame.score = frame.score + frame.secondBonus.points + + frame.firstBonus.points
+                    Log.d("previousFrames", "#$index is Strike OR Spare and took $points as 2nd Bonus")
                     break
-                } else if (frame.category == FrameCategory.STRIKE.categoryName  && points != 0){
-                    if (frame.needsFirstBonus){
-                        frame.firstBonus.points = points
-                        frame.firstBonus.frameNumber = frameNumber
-                        frame.firstBonus.fromFrameRoll = fromFrameRoll
-                        frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                        frame.needsFirstBonus = false
-                        frame.score = frame.score + + frame.firstBonus.points
-                        break
-                    }
-                    if (frame.needsSecondBonus){
-                        frame.secondBonus.points = points
-                        frame.secondBonus.frameNumber = frameNumber
-                        frame.secondBonus.fromFrameRoll = fromFrameRoll
-                        frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                        frame.needsSecondBonus = false
-                        frame.score = frame.score + + frame.secondBonus.points
-                        break
-                    }
                 }
             }
-        } // else do nothing there is no previous Frames & previous bonuses
+        } else {
+            Log.d("previousFrames", "It's the FIRST No previous Frames")
+        }
+        // else do nothing there is no previous Frames & previous bonuses
     }
 
 
