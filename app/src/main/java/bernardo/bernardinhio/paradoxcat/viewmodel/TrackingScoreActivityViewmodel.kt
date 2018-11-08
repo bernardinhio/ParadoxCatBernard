@@ -439,38 +439,77 @@ class TrackingScoreActivityViewmodel(
 
 
     private fun updatePreviousFramesBonuses(teamFramesList : ArrayList<Frame>, points : Int, frameNumber : Int, fromFrameRoll : Int){
-        if(teamFramesList.size > 0){
+        if(teamFramesList.size > 0 && points != 0){
             val currentFrameInList = teamFramesList.last()
             val currentPositionInList = teamFramesList.indexOf(currentFrameInList)
-            val previousPositionInList = currentPositionInList - 1
-            for (index in 0..previousPositionInList){
-                val frame : Frame = teamFramesList.get(index)
-                if (points != 0 && frame.needsSecondBonus){
-                    frame.secondBonus.points = points
-                    frame.secondBonus.frameNumber = frameNumber
-                    frame.secondBonus.fromFrameRoll = fromFrameRoll
-                    frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                    frame.needsSecondBonus = false
-                    frame.score = frame.score + frame.secondBonus.points + + frame.firstBonus.points
-                    Log.d("previousFrames", "#$index is Strike and took $points as 2nd Bonus")
-                    break
-                } else if (points != 0 && frame.needsFirstBonus){
-                    frame.firstBonus.points = points
-                    frame.firstBonus.frameNumber = frameNumber
-                    frame.firstBonus.fromFrameRoll = fromFrameRoll
-                    frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                    frame.needsFirstBonus = false
-                    frame.score = frame.score + frame.secondBonus.points + + frame.firstBonus.points
-                    Log.d("previousFrames", "#$index is Strike OR Spare and took $points as 2nd Bonus")
-                    break
+            if (currentPositionInList != 0){
+                val previousPositionInList = currentPositionInList - 1
+                if (currentPositionInList == 1 && previousPositionInList == 0){
+                    val frame : Frame = teamFramesList.get(0)
+                    var consumed : Boolean = false
+                    if (frame.needsSecondBonus || frame.needsFirstBonus){
+                        if (frame.needsSecondBonus && !consumed){
+                            frame.secondBonus.points = points
+                            frame.secondBonus.frameNumber = frameNumber
+                            frame.secondBonus.fromFrameRoll = fromFrameRoll
+                            frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+                            frame.needsSecondBonus = false
+                            frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
+                            consumed = true
+                            Log.d("previousFrames", "#0 is Strike and took $points as 2nd Bonus")
+                            Log.d("previousFrames", "0 updated score ${frame.score}")
+                        }
+                        if (frame.needsFirstBonus && !consumed){
+                            frame.firstBonus.points = points
+                            frame.firstBonus.frameNumber = frameNumber
+                            frame.firstBonus.fromFrameRoll = fromFrameRoll
+                            frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+                            frame.needsFirstBonus = false
+                            frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
+                            consumed = true
+                            Log.d("previousFrames", "#0 is Strike OR Spare and took $points as 2nd Bonus")
+                            Log.d("previousFrames", "0 updated score ${frame.score}")
+                        }
+                    }
+                } else{
+                    var consumed : Boolean = false
+                    for (index in 0 until previousPositionInList step 1){
+                        val frame : Frame = teamFramesList.get(index)
+                        if (frame.needsSecondBonus || frame.needsFirstBonus){
+                            if (frame.needsSecondBonus && !consumed){
+                                frame.secondBonus.points = points
+                                frame.secondBonus.frameNumber = frameNumber
+                                frame.secondBonus.fromFrameRoll = fromFrameRoll
+                                frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+                                frame.needsSecondBonus = false
+                                frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
+                                consumed = true
+                                Log.d("previousFrames", "#$index is Strike and took $points as 2nd Bonus")
+                                Log.d("previousFrames", "$index updated score ${frame.score}")
+                            }
+                            if (frame.needsFirstBonus && !consumed){
+                                frame.firstBonus.points = points
+                                frame.firstBonus.frameNumber = frameNumber
+                                frame.firstBonus.fromFrameRoll = fromFrameRoll
+                                frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+                                frame.needsFirstBonus = false
+                                frame.score = frame.score + frame.secondBonus.points  + frame.firstBonus.points
+                                consumed = true
+                                Log.d("previousFrames", "#$index is Strike OR Spare and took $points as 2nd Bonus")
+                                Log.d("previousFrames", "$index updated score ${frame.score}")
+                            }
+                        }
+                    }
                 }
+            } else {
+                Log.d("previousFrames", "It's the FIRST No previous Frames")
             }
-        } else {
-            Log.d("previousFrames", "It's the FIRST No previous Frames")
         }
-        // else do nothing there is no previous Frames & previous bonuses
     }
 
+    private fun setupFrameBonusMetrics(frame : Frame){
+
+    }
 
     private fun getTotalScoreTeamOneFramesList() : Int {
         var totalScore = 0
