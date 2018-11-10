@@ -1,7 +1,9 @@
 package bernardo.bernardinhio.paradoxcat.viewmodel
 
+import android.content.Context
 import android.databinding.BaseObservable
 import android.graphics.Point
+import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
@@ -24,8 +26,10 @@ class TrackingScoreActivityViewmodel(
         val teamOneName : String, // fields passed from Launcher Activity
         val teamTwoName : String,
 
+        var goToNextTeam : Boolean = false,
         var activeTeamNumber: Int = 1,
         var opponentTeamNumber: Int = 2,
+        var startExtraRolls : Boolean = false,
 
         var activeTeamTotalScore : String = "0",
         var opponentTeamTotalScore : String = "0",
@@ -50,8 +54,10 @@ class TrackingScoreActivityViewmodel(
         var frameCategory : String = FrameCategory.DEFAULT.categoryName,
         var textIsFrameCompleted : String = "",
 
-        var messageFirstBonus : String = "",
-        var messageSecondBonus : String = ""
+        var messageFirstBonusReceived : String = "",
+        var messageSecondBonusReceived : String = "",
+        var messageFirstBonusGiven : String = "",
+        var messageSecondBonusGiven : String = ""
 
 ): Observer, BaseObservable(){
 
@@ -116,22 +122,26 @@ class TrackingScoreActivityViewmodel(
                         secondRollInfo = "Ah.. didn't get them all \n...Bad luck !"
                         // after the 2nd Rolls is enter
                         messageSubmitButton = "Save 2nd Roll and calculate \nscore after this Frame $frameNumber"
+                        goToNextTeam = false
                         submitEnabled = true
                     }
                     remainingPins -> {
                         secondRollInfo = "Nice SPARE !! \n10 Pins in 2 Rolls!"
                         messageSubmitButton = "Save 2nd Roll and save \nthis Frame $frameNumber"
+                        goToNextTeam = false
                         submitEnabled = true
                     }
                     in (remainingPins + 1)..99 -> {
                         secondRollInfo = "can't be above $remainingPins !"
                         messageSubmitButton = "Enter 2nd Roll for Frame $frameNumber \nand continue the game !"
+                        goToNextTeam = false
                         submitEnabled = false
                     }
                 }
             } else {
                 secondRollInfo = "How many Pins you hit?"
                 messageSubmitButton = "Enter the 2nd Roll for Frame $frameNumber \nand continue the game !"
+                goToNextTeam = false
                 submitEnabled = false
             }
             this.notifyChange()
@@ -164,6 +174,8 @@ class TrackingScoreActivityViewmodel(
         if (didBothTeamsReachedTenFrames()){
             showResultGameAnimation(view)
         }
+
+        if(startExtraRolls) notifySnackBarUserEnteredExtraRolls(view)
     }
 
 
@@ -174,6 +186,7 @@ class TrackingScoreActivityViewmodel(
 
         // when the first Roll is Strike then give turn to other team
         messageSubmitButton = "Save this Frame $frameNumber \nand go to next team ${if (activeTeamNumber == 1) teamTwoName else teamOneName}"
+        goToNextTeam = true
         submitEnabled = true
 
         // disable Roll 2 because don't need it anymore but show it with its info
@@ -183,10 +196,10 @@ class TrackingScoreActivityViewmodel(
         secondRollInfo = "<-- not needed"
 
         // calculate & show result for current score
-        textIsFrameCompleted = "Completed !"
+        textIsFrameCompleted = "Rolls completed"
         frameCategory = FrameCategory.STRIKE.categoryName
-        messageFirstBonus = "You will have a 1st Bonus !"
-        messageSecondBonus = "Also ! a 2nd Bonus !"
+        messageFirstBonusReceived = "You will have a 1st Bonus !"
+        messageSecondBonusReceived = "Also ! a 2nd Bonus !"
         frameScore = "10"
         frameTitleInfo= "Frame $frameNumber ------> Score: $frameScore"
 
@@ -205,7 +218,7 @@ class TrackingScoreActivityViewmodel(
 
     fun submitEntryWhenFirstRollLessThanTen(view : View){
         messageSubmitButton = "Enter 2nd Roll for Frame $frameNumber \nand continue the game !"
-        // Enable this button after player enters the right input for Roll 2
+        goToNextTeam = false
         submitEnabled = false
 
         // disactivate Roll 1 we don't need it anymore
@@ -224,7 +237,7 @@ class TrackingScoreActivityViewmodel(
         secondRollInfo = "How many Pins you hit ?"
 
         // calculate & show result after the 1st Roll for current score
-        textIsFrameCompleted = "Not completed !"
+        textIsFrameCompleted = "Rolls not completed"
         frameCategory = FrameCategory.DEFAULT.categoryName
         frameScore = firstRoll
         frameTitleInfo= "Frame $frameNumber ------> Score: $frameScore"
@@ -247,14 +260,15 @@ class TrackingScoreActivityViewmodel(
         secondRollFinished = true
 
         // calculate & show result for current score
-        textIsFrameCompleted = "Completed !"
+        textIsFrameCompleted = "Rolls completed"
         frameScore = (firstRoll.toInt() + secondRoll.toInt()).toString()
         frameCategory = if (frameScore.toInt() == 10) FrameCategory.SPARE.categoryName else FrameCategory.CLOSED.categoryName
-        messageFirstBonus = if (frameScore.toInt() == 10) "You will have a 1st Bonus !" else ""
+        messageFirstBonusReceived = if (frameScore.toInt() == 10) "You will have a 1st Bonus !" else ""
         frameTitleInfo = "Frame $frameNumber ------> Score: $frameScore"
 
         // after the 2nd Rolls is enter and user clicks on Button
         messageSubmitButton = "Save this Frame $frameNumber \nand go to next team ${if (activeTeamNumber == 1) teamTwoName else teamOneName}"
+        goToNextTeam = true
         submitEnabled = true
 
         addCompletedFrameObjectToList()
@@ -325,7 +339,7 @@ class TrackingScoreActivityViewmodel(
     private fun switchTeamsAndRestartScoring(view : View) {
         switchMenuTitle(view)
         switchActiveTeam()
-        goToNextFrameIfBothTeamsPlayedSameFrameNumber() // TODO
+        goToNextFrameIfBothTeamsPlayedSameFrameNumber()
         resetModelView()
     }
 
@@ -364,18 +378,19 @@ class TrackingScoreActivityViewmodel(
         hasSecondRollRight = false
         secondRollFinished = false
 
-        submitEnabled = false
         messageSubmitButton = "Save the 1st Roll \nand continue the game !"
+        goToNextTeam =  false
+        submitEnabled = false
 
         frameTitleInfo = "Frame $frameNumber ------> Score: 0"
         frameScore = "0"
         frameCategory = FrameCategory.DEFAULT.categoryName
         textIsFrameCompleted = ""
 
-        messageFirstBonus = ""
-        messageSecondBonus = ""
+        messageFirstBonusReceived = ""
+        messageSecondBonusReceived = ""
 
-        // update the UI by switching current player and opponent player score
+        // update the UI by switching current player and opponent_total_score player score
         calculateScoresForActiveTeamAndOpponentTeamAfterCheckingIfActiveTeamPreviousFramesNeedBonus()
 
         notifyChange()
@@ -401,7 +416,7 @@ class TrackingScoreActivityViewmodel(
                 if(teamTwoFramesList.size > 0){
                     opponentTeamTotalScore = getTotalScoreTeamTwoFramesList().toString()
                 } else {
-                    // when it's the first frame and the opponent didn't play yet
+                    // when it's the first frame and the opponent_total_score didn't play yet
                     opponentTeamTotalScore = "0"
                 }
             }
@@ -442,73 +457,53 @@ class TrackingScoreActivityViewmodel(
         if(teamFramesList.size > 0 && points != 0){
             val currentFrameInList = teamFramesList.last()
             val currentPositionInList = teamFramesList.indexOf(currentFrameInList)
-            if (currentPositionInList != 0){
-                val previousPositionInList = currentPositionInList - 1
-                if (currentPositionInList == 1 && previousPositionInList == 0){
-                    val frame : Frame = teamFramesList.get(0)
-                    var consumed : Boolean = false
-                    if (frame.needsSecondBonus || frame.needsFirstBonus){
-                        if (frame.needsSecondBonus && !consumed){
-                            frame.secondBonus.points = points
-                            frame.secondBonus.frameNumber = frameNumber
-                            frame.secondBonus.fromFrameRoll = fromFrameRoll
-                            frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                            frame.needsSecondBonus = false
-                            frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
-                            consumed = true
-                            Log.d("previousFrames", "#0 is Strike and took $points as 2nd Bonus")
-                            Log.d("previousFrames", "0 updated score ${frame.score}")
-                        }
-                        if (frame.needsFirstBonus && !consumed){
-                            frame.firstBonus.points = points
-                            frame.firstBonus.frameNumber = frameNumber
-                            frame.firstBonus.fromFrameRoll = fromFrameRoll
-                            frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                            frame.needsFirstBonus = false
-                            frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
-                            consumed = true
-                            Log.d("previousFrames", "#0 is Strike OR Spare and took $points as 2nd Bonus")
-                            Log.d("previousFrames", "0 updated score ${frame.score}")
-                        }
-                    }
-                } else{
-                    var consumed : Boolean = false
-                    for (index in 0 until previousPositionInList step 1){
-                        val frame : Frame = teamFramesList.get(index)
-                        if (frame.needsSecondBonus || frame.needsFirstBonus){
-                            if (frame.needsSecondBonus && !consumed){
-                                frame.secondBonus.points = points
-                                frame.secondBonus.frameNumber = frameNumber
-                                frame.secondBonus.fromFrameRoll = fromFrameRoll
-                                frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                                frame.needsSecondBonus = false
-                                frame.score = frame.score + frame.secondBonus.points + frame.firstBonus.points
-                                consumed = true
-                                Log.d("previousFrames", "#$index is Strike and took $points as 2nd Bonus")
-                                Log.d("previousFrames", "$index updated score ${frame.score}")
-                            }
-                            if (frame.needsFirstBonus && !consumed){
-                                frame.firstBonus.points = points
-                                frame.firstBonus.frameNumber = frameNumber
-                                frame.firstBonus.fromFrameRoll = fromFrameRoll
-                                frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
-                                frame.needsFirstBonus = false
-                                frame.score = frame.score + frame.secondBonus.points  + frame.firstBonus.points
-                                consumed = true
-                                Log.d("previousFrames", "#$index is Strike OR Spare and took $points as 2nd Bonus")
-                                Log.d("previousFrames", "$index updated score ${frame.score}")
-                            }
-                        }
+            // the 2nd Frame can update only the first Frame // the 2nd Frame isn't catched by the Kotlin Loop from 0 to 0
+            if (currentPositionInList == 1){ // this means the 2nd Frame
+                val frame : Frame = teamFramesList.get(0)
+                // start always by the 2nd Roll that needs to be updated in the case of Strike
+                if (frame.needsSecondBonus){
+                    updateSecondBonue(frame, points, frameNumber, fromFrameRoll)
+                } else if (frame.needsFirstBonus){ // this case of Strike OR Spare
+                    updateFirstBonue(frame, points, frameNumber, fromFrameRoll)
+                }
+            }
+            else if(currentPositionInList != 0 && currentPositionInList != 1){
+                // The first Frame located at 0 doesn't update any previous Frames
+                for (index in 0 until currentPositionInList - 1 step 1){
+                    val frame : Frame = teamFramesList.get(index)
+                    if (frame.needsSecondBonus){
+                        updateSecondBonue(frame, points, frameNumber, fromFrameRoll)
+                        break
+                    } else if (frame.needsFirstBonus){ // this case of Strike Or Spare
+                        updateFirstBonue(frame, points, frameNumber, fromFrameRoll)
+                        break
                     }
                 }
-            } else {
-                Log.d("previousFrames", "It's the FIRST No previous Frames")
             }
+
         }
     }
 
-    private fun setupFrameBonusMetrics(frame : Frame){
+    private fun updateSecondBonue(frame : Frame, points : Int, frameNumber : Int, fromFrameRoll : Int){
+        frame.secondBonus.points = points
+        frame.secondBonus.frameNumber = frameNumber
+        frame.secondBonus.fromFrameRoll = fromFrameRoll
+        frame.secondBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+        frame.needsSecondBonus = false
+        frame.score = frame.score + frame.secondBonus.points
+        Log.d("previousFrames", "Frame #${frame.number} is is ${frame.category} and took $points as 2nd Bonus")
+        Log.d("previousFrames", "Frame #${frame.number} updated score ${frame.score}")
+    }
 
+    private fun updateFirstBonue(frame : Frame, points : Int, frameNumber : Int, fromFrameRoll : Int){
+        frame.firstBonus.points = points
+        frame.firstBonus.frameNumber = frameNumber
+        frame.firstBonus.fromFrameRoll = fromFrameRoll
+        frame.firstBonus.bonusMessage = "Got $points from: Frame: $frameNumber Roll: $fromFrameRoll"
+        frame.needsFirstBonus = false
+        frame.score = frame.score + frame.firstBonus.points
+        Log.d("previousFrames", "Frame #${frame.number} is ${frame.category} and took $points as 1st Bonus")
+        Log.d("previousFrames", "Frame #${frame.number} updated score ${frame.score}")
     }
 
     private fun getTotalScoreTeamOneFramesList() : Int {
@@ -540,6 +535,10 @@ class TrackingScoreActivityViewmodel(
     }
 
 
+
+    public fun showAnimationFromActivity(context : Context){
+        inflateFragmentAnimation(View(context))
+    }
 
     private fun inflateFragmentAnimation(view : View){
         // In case we want the animation to appear from menu for example before the game finishes
@@ -588,11 +587,11 @@ class TrackingScoreActivityViewmodel(
                 containerForFragment!!.getLocationOnScreen(outLocation)
                 val windowsTop = outLocation[1]
 
-                // set Y position at the end of screen
-                containerForFragment!!.translationY = (heightScreen - windowsTop - fragment!!.view!!.height).toFloat()
+                // set Y position at the top of screen
+                containerForFragment!!.translationY = 0f
 
                 // setup the Fragment values
-                fragment!!.tvCongratulationsMessage!!.text = "It seems someone has won my game! \n\nCongratulations \n${getWinnerTeamName()} \nSCORE ${getWinnerTeamScore()}"
+                fragment!!.tvCongratulationsMessage!!.text = "It seems someone has \nwon my game! \n\nCongratulations \n${getWinnerTeamName()} \nSCORE ${getWinnerTeamScore()}"
                 fragment!!.tvResultsTeamOne!!.text = "$teamOneName    You scored: ${getTotalScoreTeamOneFramesList()}"
                 fragment!!.tvResultsTeamTwo!!.text = "$teamTwoName    You scored: ${getTotalScoreTeamTwoFramesList()}"
 
@@ -600,7 +599,6 @@ class TrackingScoreActivityViewmodel(
                 containerForFragment!!.setOnClickListener {
                     trackingScoreActivityView.finish()
                 }
-
             }
             override fun onAnimationEnd(animation: Animation) {
                 containerForFragment!!.visibility = View.GONE
@@ -627,6 +625,12 @@ class TrackingScoreActivityViewmodel(
     }
 
 
+    fun notifySnackBarUserEnteredExtraRolls(view: View) {
+        var snackbar = Snackbar.make(
+                view,
+                "YOU ENTERED EXTRA ROLLS !",
+                Snackbar.LENGTH_LONG).show()
+    }
 
 
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/cl_fragment_animation_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rectangle_background_animation"
-    android:layout_gravity="bottom|fill_horizontal"
+    android:layout_gravity="top|fill_horizontal"
     android:paddingTop="5sp"
     android:paddingBottom="20sp"
     android:paddingRight="5sp"
@@ -16,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:padding="5sp"
+        android:padding="10sp"
         app:layout_constraintDimensionRatio="1:1.2"
         android:src="@drawable/congratulations_image_funny"
         app:layout_constraintTop_toTopOf="parent"

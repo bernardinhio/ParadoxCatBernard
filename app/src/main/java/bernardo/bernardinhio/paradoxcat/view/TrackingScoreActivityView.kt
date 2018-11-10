@@ -1,5 +1,6 @@
 package bernardo.bernardinhio.paradoxcat.view
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -18,6 +19,7 @@ class TrackingScoreActivityView : AppCompatActivity() {
     private var teamOneName: String = ""
     private var teamTwoName: String = ""
     private val shouldAllowBack = false
+    private var viewmodel : TrackingScoreActivityViewmodel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +41,10 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val activityTrackingScoreBinding = DataBindingUtil.setContentView<ActivityTrackingScoreBinding>(this@TrackingScoreActivityView, R.layout.activity_tracking_score)
 
         // create a viewmodel object
-        val trackingScoreActivityViewmodel = TrackingScoreActivityViewmodel(teamOneName,teamTwoName)
+        viewmodel = TrackingScoreActivityViewmodel(teamOneName,teamTwoName)
 
         // use the auto-generated setter of the object inside the tag <variable> in the XML to set the viewModel of that Layout
-        activityTrackingScoreBinding.viewModel = trackingScoreActivityViewmodel
+        activityTrackingScoreBinding.viewModel = viewmodel
 
         // close keyboard onStrat
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -65,8 +67,20 @@ class TrackingScoreActivityView : AppCompatActivity() {
                 finish()
                 Toast.makeText(this, "See you later !", Toast.LENGTH_LONG).show()
             }
+            R.id.menu_show_anim -> {
+                viewmodel?.showAnimationFromActivity(this)
+            }
             R.id.menu_share_app -> {
-                // share url googleplay with other Apps
+                try {
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "text/plain"
+                    val message = "Bowling is a game that makes every phase influence the previous phases \n\n check this amazing App for scoring the Bowing https://github.com/bernardinhio/ParadoxCatBernard"
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Bernard's new App")
+                    intent.putExtra(Intent.EXTRA_TEXT, message)
+                    this.startActivity(Intent.createChooser(intent, "Share place with"))
+                } catch (e: Exception) {
+                    e.toString()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

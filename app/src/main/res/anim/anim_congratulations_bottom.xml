@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <translate
-        android:duration="10"
-        android:startOffset="0"
-        android:fillAfter="true"
-        android:fromYDelta="0%p"
-        android:toYDelta="0%p" />
     <alpha
         android:duration="5000"
         android:startOffset="10"
@@ -24,10 +18,11 @@
         android:startOffset="10010"
         android:fromXScale="1"
         android:fromYScale="1"
-        android:pivotX="60%"
-        android:pivotY="50%"
         android:toXScale="0.8"
-        android:toYScale="0.8" />
+        android:toYScale="0.8"
+        android:pivotX="60%"
+        android:pivotY="60%"
+        />
     <alpha
         android:duration="3000"
         android:startOffset="17010"
