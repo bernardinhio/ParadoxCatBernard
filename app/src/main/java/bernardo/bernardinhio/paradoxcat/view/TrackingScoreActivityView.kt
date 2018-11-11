@@ -1,5 +1,7 @@
 package bernardo.bernardinhio.paradoxcat.view
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -64,8 +66,18 @@ class TrackingScoreActivityView : AppCompatActivity() {
         val itemId = item.itemId
         when (itemId) {
             R.id.menu_end_game -> {
-                finish()
-                Toast.makeText(this, "See you later !", Toast.LENGTH_LONG).show()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Sure you want to stop the game?")
+                builder.setMessage("If you stop it, all the scores recorded will be removed")
+                builder.setPositiveButton("YES") { dialog, which ->
+                    finish()
+                    Toast.makeText(this, "See you later !", Toast.LENGTH_LONG).show()
+                }
+                builder.setNeutralButton("CANCEL") {
+                    dialog, which ->
+                    builder.setCancelable(true)
+                }
+                builder.show()
             }
             R.id.menu_show_anim -> {
                 viewmodel?.showAnimationFromActivity(this)

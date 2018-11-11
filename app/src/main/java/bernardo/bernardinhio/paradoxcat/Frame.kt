@@ -27,7 +27,8 @@ class Bonus(
         var receiverFrame : Frame? = null,
         var providerRollNumber : Int = 0,
         var points : Int = 0,
-        var message : String = ""
+        var message : String = "",
+        var extraNumber : Int = 0
 ){
 
 }
