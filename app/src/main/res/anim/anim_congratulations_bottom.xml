@@ -2,30 +2,37 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <alpha
-        android:duration="5000"
+        android:duration="4000"
         android:startOffset="10"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="1.0" />
+    <rotate
+        android:duration="100"
+        android:fromDegrees="-0.3"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:toDegrees="0.3" />
     <alpha
-        android:duration="5000"
-        android:startOffset="5010"
+        android:duration="4000"
+        android:startOffset="4010"
         android:fromAlpha="1.0"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="1.0" />
     <scale
         android:duration="5000"
-        android:startOffset="10010"
+        android:startOffset="9010"
         android:fromXScale="1"
         android:fromYScale="1"
         android:toXScale="0.8"
         android:toYScale="0.8"
         android:pivotX="60%"
-        android:pivotY="60%"
-        />
+        android:pivotY="60%" />
     <alpha
         android:duration="3000"
-        android:startOffset="17010"
+        android:startOffset="16010"
         android:fromAlpha="1.0"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="0.0" />

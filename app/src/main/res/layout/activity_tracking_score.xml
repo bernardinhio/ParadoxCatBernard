@@ -20,11 +20,12 @@
             <include layout="@layout/container_animation_congratulation"/>
             <ImageView
                 android:id="@+id/my_score_logo"
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
                 android:paddingLeft="5sp"
                 android:paddingRight="5sp"
+                android:layout_marginRight="5sp"
                 android:src="@drawable/my_total_score"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/my_total_score"
@@ -45,11 +46,12 @@
                 tools:text="My total Score"/>
             <ImageView
                 android:id="@+id/opponent_score_logo"
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
                 android:paddingLeft="5sp"
                 android:paddingRight="5sp"
+                android:layout_marginRight="5sp"
                 android:src="@drawable/opponent_total_score"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/opponent_total_score"
@@ -130,7 +132,7 @@
                     app:layout_constraintRight_toLeftOf="@id/first_roll_info"
                     app:layout_constraintTop_toBottomOf="@id/current_frame_metrics"
                     android:background="@{viewModel.firstRollFinished == false ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
-                    android:text="@={viewModel.firstRoll}"
+                    android:text="@={viewModel.firstRollScore}"
                     android:afterTextChanged="@{(editable) -> viewModel.afterTextChangedFirstRoll(editable)}"
                     android:enabled="@{viewModel.firstRollEnabled}"/>
                 <TextView
@@ -164,7 +166,7 @@
                     android:background="@{viewModel.secondRollFinished == false ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
                     android:visibility="@{viewModel.hasSecondRollRight ? View.VISIBLE : View.INVISIBLE}"
                     android:enabled="@{viewModel.secondRollEnabled}"
-                    android:text="@={viewModel.secondRoll}"
+                    android:text="@={viewModel.secondRollScore}"
                     android:afterTextChanged="@{(editable) -> viewModel.afterTextChangedSecondRoll(editable)}"/>
                 <TextView
                     android:id="@+id/secon_roll_info"
