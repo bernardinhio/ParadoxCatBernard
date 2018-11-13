@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_end_game"
-        android:title="End game"
+        android:title="DEV end game"
         app:showAsAction="always">
     </item>
     <item

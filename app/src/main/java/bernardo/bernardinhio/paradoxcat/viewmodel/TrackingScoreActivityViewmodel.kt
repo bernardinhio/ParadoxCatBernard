@@ -13,6 +13,7 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.Toast
 import bernardo.bernardinhio.paradoxcat.Bonus
 import bernardo.bernardinhio.paradoxcat.FrameCategory
 import bernardo.bernardinhio.paradoxcat.Frame
@@ -69,8 +70,11 @@ class TrackingScoreActivityViewmodel(
     var frameIsCompletedAndSaved : Boolean = false
     var teamOneNeedsExtra = false
     var teamTwoNeedsExtra = false
-    var extraNumberTeamOne = 0
-    var extraNumberTeamTwo = 0
+    var extraNumberTeamOne = 1
+    var extraNumberTeamTwo = 1
+    var countSwitchGameToExtraMode = 0
+    var numClicksForExtraTeamTwo = 0
+    var numClicksForExtraTeamOne = 0
 
     override fun update(observable: Observable?, p1: Any?) {
         /**
@@ -160,7 +164,7 @@ class TrackingScoreActivityViewmodel(
     fun submitEntry(view : View){
         if (!didBothTeamsReachedTenFrames()){
             // after the player enters valid value between 0 and 10 then clicks button
-            if (!secondRollEnabled && firstRollScore.toInt() in 0..10 && firstRollEnabled){
+            if (!secondRollEnabled && !firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
                 when(firstRollScore.toInt()){
                     10 -> submitEntryWhenFirstRollEqualsTen(view)
                     in 0..9 -> submitEntryWhenFirstRollLessThanTen(view)
@@ -181,16 +185,116 @@ class TrackingScoreActivityViewmodel(
 
         } else { // when reaching the 10th Frame
 
-            if(countNotifyTeamOneEntersExtra == 1 || countNotifyTeamTwoEntersExtra == 1){
-                notifySnackBarUserEnteredExtraRolls(view)
+            checkIfTeamOneNeedsExtra()
+            checkIfTeamTwoNeedsExtra()
+
+            if(countSwitchGameToExtraMode == 0){
+                if (teamOneNeedsExtra){
+                    switchTeamsAndRestartScoring(view)
+                    prepareUiForExtra(view)
+                    messageSubmitButton ="Fill Extra for $teamOneName"
+                    if(countNotifyTeamOneEntersExtra == 1) {
+                        notifyUserEnteredExtrasPhase(view)
+                    }
+                } else if(teamTwoNeedsExtra){
+                    prepareUiForExtra(view)
+                    messageSubmitButton ="Fill Extra for $teamTwoName"
+                    if(countNotifyTeamTwoEntersExtra == 1) {
+                        notifyUserEnteredExtrasPhase(view)
+                    }
+                }
+                countSwitchGameToExtraMode++
             }
 
-            if (teamOneNeedsExtra && teamTwoNeedsExtra){
-                disableScreenAndShowResultGameAnimation(view)
+
+            when(activeTeamNumber){
+                2 -> {
+                    if (teamTwoNeedsExtra){
+                        // stay same team
+                        if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
+
+                            if (numClicksForExtraTeamTwo == 0){
+                                // after filling the Bonus for team2 and clicking submit
+                                messageSubmitButton ="Check Bonuses for $teamTwoName"
+
+                                frameTitleInfo= "Extra number $extraNumberTeamTwo -------> Score $firstRollScore"
+
+                                collectExtraRollAndUpdateTeamTwoBonuses(view)
+
+                                closeKeyboard(view)
+
+                                firstRollEnabled = false
+
+                                if(teamOneNeedsExtra && numClicksForExtraTeamTwo == 2){
+                                    // switch team
+                                    switchTeamsAndRestartScoring(view)
+                                    prepareUiForExtra(view)
+                                    messageSubmitButton ="Fill Extra for $teamOneName"
+                                    closeKeyboard(view)
+                                    if(countNotifyTeamOneEntersExtra == 1) {
+                                        notifyUserEnteredExtrasPhase(view)
+                                    }
+                                }
+                            }
+                            numClicksForExtraTeamTwo++
+                        }
+                    }
+                }
+                1 -> {
+                    if(teamOneNeedsExtra){
+                        // stay same team
+                        if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
+
+                            if (numClicksForExtraTeamTwo == 0){
+                                // after going to the Extra and switching to the team1
+                                // then filling the score and clicking submit
+                                messageSubmitButton ="Check Bonuses for Team-1"
+
+                                frameTitleInfo= "Extra number $extraNumberTeamOne -------> Score $firstRollScore"
+
+                                collectExtraRollAndUpdateTeamOneBonuses(view)
+
+                                closeKeyboard(view)
+
+                                firstRollEnabled = false
+
+                                if (teamTwoNeedsExtra && numClicksForExtraTeamOne == 2){
+                                    // switch team
+                                    switchTeamsAndRestartScoring(view)
+                                    prepareUiForExtra(view)
+                                    messageSubmitButton ="Fill Extra for Team-2"
+                                    closeKeyboard(view)
+                                    if(countNotifyTeamTwoEntersExtra == 1) {
+                                        notifyUserEnteredExtrasPhase(view)
+                                    }
+                                }
+                            }
+                            numClicksForExtraTeamOne++
+                        }
+                    } else if (teamTwoNeedsExtra){
+                        // switch team
+                        switchTeamsAndRestartScoring(view)
+                        prepareUiForExtra(view)
+                        messageSubmitButton ="Fill Extra for Team-2"
+                        closeKeyboard(view)
+                        if(countNotifyTeamTwoEntersExtra == 1) {
+                            notifyUserEnteredExtrasPhase(view)
+                        }
+
+                    }
+                }
             }
 
-            submitExtra(view)
+            // do here operations
+            if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
+                //collectExtraRollAndUpdateTeamTwoBonuses(view)
+            }
 
+
+
+
+
+/**
             when(activeTeamNumber){
                 1 -> {
                     var frame : Frame
@@ -198,7 +302,7 @@ class TrackingScoreActivityViewmodel(
                         frame = teamOneFramesList.get(i)
                         if (frame.needsSecondBonus || frame.needsFirstBonus){
 
-                            submitExtra(view)
+                            prepareUiForExtra(view)
 
                             if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
                                 extraNumberTeamOne++
@@ -254,7 +358,7 @@ class TrackingScoreActivityViewmodel(
                         frame = teamTwoFramesList.get(i)
                         if (frame.needsSecondBonus || frame.needsFirstBonus){
 
-                            submitExtra(view)
+                            prepareUiForExtra(view)
 
                             if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
                                 extraNumberTeamTwo++
@@ -305,21 +409,22 @@ class TrackingScoreActivityViewmodel(
                     }
                 }
             }
-
+**/
+            if(!teamOneNeedsExtra && !teamTwoNeedsExtra) {
+                //disableScreenAndShowResultGameAnimation(view)
+            }
 
         }
     }
 
 
 
-    fun submitExtra(view : View){
-
-        switchTeamsAndRestartScoring(view)
-
+    fun prepareUiForExtra(view : View){
         firstRollEnabled = true
         firstRollFinished = false
         hasSecondRollRight = false
-        frameTitleInfo= "Extra number $extraNumberTeamOne"
+        frameTitleInfo= "Extra number $extraNumberTeamOne -------> Score $firstRollScore"
+        extraNumberTeamOne++
         messageSubmitButton = "Go to Extra"
 
         calculateScoresForActiveTeamAndOpponentTeam()
@@ -327,6 +432,26 @@ class TrackingScoreActivityViewmodel(
         closeKeyboard(view)
 
         notifyChange()
+    }
+
+    fun checkIfTeamOneNeedsExtra(){
+        for (frame in teamOneFramesList){
+            teamOneNeedsExtra = (frame.needsSecondBonus || frame.needsFirstBonus)
+        }
+    }
+
+    fun checkIfTeamTwoNeedsExtra(){
+        for (frame in teamOneFramesList){
+            teamTwoNeedsExtra = (frame.needsSecondBonus || frame.needsFirstBonus)
+        }
+    }
+
+    fun collectExtraRollAndUpdateTeamOneBonuses(view : View){
+        Toast.makeText(view.context, "TeamOneBonuses", Toast.LENGTH_LONG).show()
+    }
+
+    fun collectExtraRollAndUpdateTeamTwoBonuses(view : View){
+        Toast.makeText(view.context, "TeamTwoBonuses", Toast.LENGTH_LONG).show()
     }
 
 
@@ -831,7 +956,7 @@ class TrackingScoreActivityViewmodel(
     }
 
 
-    fun notifySnackBarUserEnteredExtraRolls(view: View) {
+    fun notifyUserEnteredExtrasPhase(view: View) {
         var snackbar = Snackbar.make(
                 view,
                 "YOU ENTERED EXTRA ROLLS !",
