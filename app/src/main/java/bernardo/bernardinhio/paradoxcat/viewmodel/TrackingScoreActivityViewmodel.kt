@@ -13,7 +13,6 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import android.widget.Toast
 import bernardo.bernardinhio.paradoxcat.Bonus
 import bernardo.bernardinhio.paradoxcat.FrameCategory
 import bernardo.bernardinhio.paradoxcat.Frame
@@ -27,12 +26,6 @@ import kotlin.collections.ArrayList
 class TrackingScoreActivityViewmodel(
         val teamOneName : String, // fields passed from Launcher Activity
         val teamTwoName : String,
-
-        var goToNextTeam : Boolean = false,
-        var activeTeamNumber: Int = 1,
-        var opponentTeamNumber: Int = 2,
-        var countNotifyTeamOneEntersExtra : Int = 0,
-        var countNotifyTeamTwoEntersExtra : Int = 0,
 
         var activeTeamTotalScore : String = "0",
         var opponentTeamTotalScore : String = "0",
@@ -51,9 +44,7 @@ class TrackingScoreActivityViewmodel(
         var submitEnabled : Boolean = false,
         var messageSubmitButton: String = "Save the 1st Roll \nand continue the game !",
 
-        var frameNumber : Int = 1,
         var frameTitleInfo: String = "Frame 1 ------> Score: 0",
-        var frameScore : String = "0",
         var frameCategory : String = FrameCategory.DEFAULT.categoryName,
         var textIsFrameCompleted : String = "",
 
@@ -69,11 +60,21 @@ class TrackingScoreActivityViewmodel(
     lateinit var pageFrame : Frame
     val teamOneFramesList : ArrayList<Frame> = ArrayList()
     val teamTwoFramesList : ArrayList<Frame> = ArrayList()
+
+    var goToNextTeam : Boolean = false
+    var activeTeamNumber: Int = 1
+    var opponentTeamNumber: Int = 2
+    var countNotifyTeamOneEntersExtra : Int = 0
+    var countNotifyTeamTwoEntersExtra : Int = 0
+
     var frameIsCompletedAndSaved : Boolean = false
+    var frameNumber : Int = 1
+    var frameScore : String = "0"
+
     var teamOneNeedsExtra = false
     var teamTwoNeedsExtra = false
-    var extraNumberTeamOne = 1
-    var extraNumberTeamTwo = 1
+    var countTeamOneExtra = 1
+    var countTeamTwoExtra = 1
     var countSwitchGameToExtraMode = 0
     var goToTeamTwoExtra : Boolean = false
     var goToTeamOneExtra : Boolean = false
@@ -220,14 +221,14 @@ class TrackingScoreActivityViewmodel(
 
                                 // after filling the Bonus for team2 and clicking submit
                                 messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-                                frameTitleInfo= "Extra # $extraNumberTeamTwo -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                                 firstRollEnabled = false
                                 firstRollFinished =  true
                                 setExtraRollMessage()
                                 notifyChange()
                                 closeKeyboard(view)
 
-                                extraNumberTeamTwo++
+                                countTeamTwoExtra++
                                 collectExtraRollAndUpdateTeamTwoBonuses(view)
                             }
 
@@ -237,7 +238,7 @@ class TrackingScoreActivityViewmodel(
                                 switchTeamsAndRestartScoring(view)
                                 prepareUiForExtra(view)
                                 messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                                frameTitleInfo= "Extra # $extraNumberTeamOne -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                                frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                                 notifyChange()
                                 closeKeyboard(view)
 
@@ -259,14 +260,14 @@ class TrackingScoreActivityViewmodel(
                             if (!goToTeamTwoExtra){
 
                                 messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-                                frameTitleInfo= "Extra # $extraNumberTeamOne -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                                frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                                 firstRollEnabled = false
                                 firstRollFinished =  true
                                 setExtraRollMessage()
                                 notifyChange()
                                 closeKeyboard(view)
 
-                                extraNumberTeamOne++
+                                countTeamOneExtra++
                                 collectExtraRollAndUpdateTeamOneBonuses(view)
                             }
 
@@ -276,7 +277,7 @@ class TrackingScoreActivityViewmodel(
                                 switchTeamsAndRestartScoring(view)
                                 prepareUiForExtra(view)
                                 messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                                frameTitleInfo= "Extra # $extraNumberTeamTwo -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                                 notifyChange()
                                 closeKeyboard(view)
 
@@ -292,7 +293,7 @@ class TrackingScoreActivityViewmodel(
                         switchTeamsAndRestartScoring(view)
                         prepareUiForExtra(view)
                         messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                        frameTitleInfo= "Extra # $extraNumberTeamTwo -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                        frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                         notifyChange()
                         closeKeyboard(view)
                     }
@@ -359,8 +360,8 @@ class TrackingScoreActivityViewmodel(
                 frame.secondBonusReceived.points = points
                 frame.secondBonusReceived.providerFrame = null
                 frame.secondBonusReceived.providerRollNumber = 0
-                frame.secondBonusReceived.extraNumber = extraNumberTeamOne
-                frame.secondBonusReceived.message = "Got $points from: Extra # $extraNumberTeamOne"
+                frame.secondBonusReceived.extraNumber = countTeamOneExtra
+                frame.secondBonusReceived.message = "Got $points from: Extra # $countTeamOneExtra"
                 frame.needsSecondBonus = false
                 // update the score of the receiver Frame with the new second bonus value
                 frame.score = frame.score + frame.secondBonusReceived.points
@@ -376,8 +377,8 @@ class TrackingScoreActivityViewmodel(
                 frame.firstBonusReceived.points = points
                 frame.firstBonusReceived.providerFrame = null
                 frame.firstBonusReceived.providerRollNumber = 0
-                frame.firstBonusReceived.extraNumber = extraNumberTeamTwo
-                frame.firstBonusReceived.message = "Got $points from: Extra # $extraNumberTeamTwo"
+                frame.firstBonusReceived.extraNumber = countTeamTwoExtra
+                frame.firstBonusReceived.message = "Got $points from: Extra # $countTeamTwoExtra"
                 frame.needsFirstBonus = false
                 // update the score of the receiver Frame with the new first bonus value
                 frame.score = frame.score + frame.firstBonusReceived.points
@@ -405,8 +406,8 @@ class TrackingScoreActivityViewmodel(
                 frame.secondBonusReceived.points = points
                 frame.secondBonusReceived.providerFrame = null
                 frame.secondBonusReceived.providerRollNumber = 0
-                frame.secondBonusReceived.extraNumber = extraNumberTeamOne
-                frame.secondBonusReceived.message = "Got $points from: Extra # $extraNumberTeamOne"
+                frame.secondBonusReceived.extraNumber = countTeamOneExtra
+                frame.secondBonusReceived.message = "Got $points from: Extra # $countTeamOneExtra"
                 frame.needsSecondBonus = false
                 // update the score of the receiver Frame with the new second bonus value
                 frame.score = frame.score + frame.secondBonusReceived.points
@@ -422,8 +423,8 @@ class TrackingScoreActivityViewmodel(
                 frame.firstBonusReceived.points = points
                 frame.firstBonusReceived.providerFrame = null
                 frame.firstBonusReceived.providerRollNumber = 0
-                frame.firstBonusReceived.extraNumber = extraNumberTeamTwo
-                frame.firstBonusReceived.message = "Got $points from: Extra # $extraNumberTeamTwo"
+                frame.firstBonusReceived.extraNumber = countTeamTwoExtra
+                frame.firstBonusReceived.message = "Got $points from: Extra # $countTeamTwoExtra"
                 frame.needsFirstBonus = false
                 // update the score of the receiver Frame with the new first bonus value
                 frame.score = frame.score + frame.firstBonusReceived.points
@@ -645,7 +646,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 5 && teamTwoFramesList.size == 5)
+        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
     }
 
 
@@ -863,8 +864,6 @@ class TrackingScoreActivityViewmodel(
     private fun inflateFragmentAnimation(view : View){
         // In case we want the animation to appear from menu for example before the game finishes
         submitEnabled = false
-        messageSubmitButton ="SHOW RESULTS \n ${getWinnerTeamName()} won?! see details..."
-        frameTitleInfo= "Game ends now..."
         isButtonReshowAnimationVisible = true
         notifyChange()
 
