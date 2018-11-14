@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_end_game"
-        android:title="DEV end game"
+        android:title="end game"
         app:showAsAction="always">
     </item>
     <item
         android:id="@+id/menu_show_anim"
-        android:title="Test Anim"
+        android:title="DEV test Anim"
         app:showAsAction="never">
     </item>
     <item
