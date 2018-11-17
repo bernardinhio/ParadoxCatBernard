@@ -9,7 +9,7 @@ Spare Frame
 ![Spare Frame](https://user-images.githubusercontent.com/20923486/48657064-31849300-ea2d-11e8-8629-c996df97cc86.png)
 
 Non-special Frame
-![Non-special Frame](https://user-images.githubusercontent.com/20923486/48657101-92ac6680-ea2d-11e8-8df2-0c0f4afad7c5.png)
+![Non-special Frame](https://user-images.githubusercontent.com/20923486/48657305-888b6780-ea2f-11e8-8fbf-7a08ac0a5342.png)
 
 Animation result shaking
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
