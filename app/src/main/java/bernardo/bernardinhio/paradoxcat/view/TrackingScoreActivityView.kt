@@ -28,12 +28,12 @@ class TrackingScoreActivityView : AppCompatActivity() {
 
         // get names of teams passed from launcher Activity
         val intent = this.intent
-        if (intent != null) {
+        if (intent != null && intent.hasExtra(HomeActivityViewmodel.TEAM_ONE_NAME) && intent.hasExtra(HomeActivityViewmodel.TEAM_TWO_NAME)) {
             teamOneName = intent.getStringExtra(HomeActivityViewmodel.TEAM_ONE_NAME)
             teamTwoName = intent.getStringExtra(HomeActivityViewmodel.TEAM_TWO_NAME)
 
-            if (teamOneName.isEmpty()) teamOneName = "Team-1"
-            if (teamTwoName.isEmpty()) teamTwoName = "Team-2"
+            if (teamOneName.isEmpty()) teamOneName = "Strong-elbows" // default
+            if (teamTwoName.isEmpty()) teamTwoName = "The-Strikers" // default
 
             Toast.makeText(this, "Your name: $teamOneName \n\n Opponent's name: $teamTwoName", Toast.LENGTH_LONG).show()
         }

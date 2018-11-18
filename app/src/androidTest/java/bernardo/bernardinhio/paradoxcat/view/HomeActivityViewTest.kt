@@ -1,6 +1,7 @@
 package bernardo.bernardinhio.paradoxcat.view
 
 import android.app.Activity
+import android.app.Instrumentation
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import org.junit.After
@@ -36,11 +37,10 @@ class HomeActivityViewTest {
     @Test
     fun whenUserClicksOnStartGameButton_ThenActivityTrackingScoreActivityView_ShouldOpen(){
 
-        Looper.prepare()
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val instrumentation : Instrumentation = InstrumentationRegistry.getInstrumentation()
         assertNotNull(instrumentation)
 
-        val monitor = instrumentation.addMonitor(
+        val monitor : Instrumentation.ActivityMonitor = instrumentation.addMonitor(
                 TrackingScoreActivityView::class.java!!.getName(),
                 null,
                 false

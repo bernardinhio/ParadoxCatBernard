@@ -44,7 +44,7 @@ class TrackingScoreActivityViewmodel(
         var submitEnabled : Boolean = false,
         var messageSubmitButton: String = "Save the 1st Roll \nand continue the game !",
 
-        var frameTitleInfo: String = "Frame 1 ------> Score: 0",
+        var frameTitleInfo: String = "Frame #1 ------> Score: 0",
         var frameCategory : String = FrameCategory.DEFAULT.categoryName,
         var textIsFrameCompleted : String = "",
 
@@ -76,8 +76,8 @@ class TrackingScoreActivityViewmodel(
     var countTeamOneExtra = 1
     var countTeamTwoExtra = 1
     var countSwitchGameToExtraMode = 0
-    var goToTeamTwoExtra : Boolean = false
-    var goToTeamOneExtra : Boolean = false
+    var goToOtherTeamExtra : Boolean = false
+    var extraRollsPhaseStarted = false
 
     override fun update(observable: Observable?, p1: Any?) {
         /**
@@ -124,7 +124,6 @@ class TrackingScoreActivityViewmodel(
         }
     }
 
-
     fun afterTextChangedSecondRoll(editable : Editable){
         // after the first roll is finished
         if (!firstRollEnabled && firstRollFinished){
@@ -162,168 +161,181 @@ class TrackingScoreActivityViewmodel(
         }
     }
 
-
-
     fun submitEntry(view : View){
-        if (!didBothTeamsReachedTenFrames()){
-            // after the player enters valid value between 0 and 10 then clicks button
-            if (!secondRollEnabled && !firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
-                when(firstRollScore.toInt()){
-                    10 -> submitEntryWhenFirstRollEqualsTen(view)
-                    in 0..9 -> submitEntryWhenFirstRollLessThanTen(view)
-                }
+        // after the player enters valid value between 0 and 10 then clicks button
+        if (!extraRollsPhaseStarted && !secondRollEnabled && !firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10 && firstRollEnabled){
+            when(firstRollScore.toInt()){
+                10 -> submitEntryWhenFirstRollEqualsTen(view)
+                in 0..9 -> submitEntryWhenFirstRollLessThanTen(view)
             }
-            /**
-             * after the player has already entered & saved the 1st Roll that
-             * didn't hit all the Pins, so player has to enter the 2nd Roll
-             * that is between 0 and the remaining Pins
-             */
-            else if (secondRollEnabled && !secondRollScore.isEmpty() && !firstRollEnabled){
-                submitEntryWhenSecondRollEqualsOrLessThanRemaining(view)
-            }
-            // after the frame is added to the ArrayList
-            else if(frameIsCompletedAndSaved){
-                switchTeamsAndRestartScoring(view)
-            }
-
-        } else { // when reaching the 10th Frame
-
-            checkIfTeamOneNeedsExtra()
-            checkIfTeamTwoNeedsExtra()
-
-            if(countSwitchGameToExtraMode == 0){
-                // when bothTeams reach 10 Frames, the active team will be Team2
-                if (teamOneNeedsExtra){
-                    switchTeamsAndRestartScoring(view)
-                    prepareUiForExtra(view)
-                    messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-
-                    notifyTeamStartedExtrasPhase(view, 1)
-
-                } else if(teamTwoNeedsExtra){
-                    prepareUiForExtra(view)
-                    messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-
-                    notifyTeamStartedExtrasPhase(view, 2)
-                }
-                countSwitchGameToExtraMode++
-            }
-
-
-            when(activeTeamNumber){
-                2 -> {
-                    if (teamTwoNeedsExtra){
-
-                        if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10){
-
-                            // first click to save data and check previous bonuses
-                            if (!goToTeamOneExtra){
-
-                                // after filling the Bonus for team2 and clicking submit
-                                messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-                                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-                                firstRollEnabled = false
-                                firstRollFinished =  true
-                                setExtraRollMessage()
-                                notifyChange()
-                                closeKeyboard(view)
-
-                                countTeamTwoExtra++
-                                collectExtraRollAndUpdateTeamTwoBonuses(view)
-                            }
-
-                            // second click to switch to next team if it needs Bonus
-                            if(teamOneNeedsExtra && goToTeamOneExtra){
-
-                                switchTeamsAndRestartScoring(view)
-                                prepareUiForExtra(view)
-                                messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                                frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-                                notifyChange()
-                                closeKeyboard(view)
-
-                                notifyTeamStartedExtrasPhase(view, 1)
-                            }
-
-                            goToTeamOneExtra = !goToTeamOneExtra
-
-                            notifyTeamStartedExtrasPhase(view, 2)
-                        }
-                    }
-                }
-                1 -> {
-                    if(teamOneNeedsExtra){
-
-                        if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10){
-
-                            // first click to save data and check previous bonuses
-                            if (!goToTeamTwoExtra){
-
-                                messageSubmitButton ="Check if previous Frames need \nBonuses and calculate their scores"
-                                frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-                                firstRollEnabled = false
-                                firstRollFinished =  true
-                                setExtraRollMessage()
-                                notifyChange()
-                                closeKeyboard(view)
-
-                                countTeamOneExtra++
-                                collectExtraRollAndUpdateTeamOneBonuses(view)
-                            }
-
-                            // second click to switch to next team if it needs Bonus
-                            if (teamTwoNeedsExtra && goToTeamTwoExtra){
-
-                                switchTeamsAndRestartScoring(view)
-                                prepareUiForExtra(view)
-                                messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-                                notifyChange()
-                                closeKeyboard(view)
-
-                                notifyTeamStartedExtrasPhase(view, 2)
-                            }
-
-                            goToTeamTwoExtra = !goToTeamTwoExtra
-
-                            notifyTeamStartedExtrasPhase(view, 1)
-                        }
-                    } else if (teamTwoNeedsExtra){ // the final extra before end of the game
-                        // switch team
-                        switchTeamsAndRestartScoring(view)
-                        prepareUiForExtra(view)
-                        messageSubmitButton ="Please fill this extra Roll \nto complete your previous Frames"
-                        frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-                        notifyChange()
-                        closeKeyboard(view)
-                    }
-                }
-            }
-
-            // show animation result
-            if(!teamOneNeedsExtra && !teamTwoNeedsExtra) {
-
-                prepareUiForExtra(view)
-                firstRollEnabled = false
-                notifyChange()
-
-                disableScreenAndShowResultGameAnimation(view)
-            }
-
+        }
+        /**
+         * after the player has already entered & saved the 1st Roll that
+         * didn't hit all the Pins, so player has to enter the 2nd Roll
+         * that is between 0 and the remaining Pins
+         */
+        else if (secondRollEnabled && !secondRollScore.isEmpty() && !firstRollEnabled){
+            submitEntryWhenSecondRollEqualsOrLessThanRemaining(view)
+        }
+        // after the frame is added to the ArrayList
+        else if(frameIsCompletedAndSaved && !didBothTeamsReachedTenFrames()){
+            switchTeamsAndRestartScoring(view)
+        } else if (didBothTeamsReachedTenFrames()){ // when reaching the 10th Frame
+            startExtraRollsPhase(view)
+            extraRollsPhaseStarted = true
         }
     }
 
+    private fun startExtraRollsPhase(view : View){
+        checkIfTeamOneNeedsExtra()
+        checkIfTeamTwoNeedsExtra()
+
+        if(countSwitchGameToExtraMode == 0){
+            // when bothTeams reach 10 Frames, the active team will be Team2
+            if (teamOneNeedsExtra){
+                switchTeamsAndRestartScoring(view)
+                prepareUiForExtra(view)
+                messageSubmitButton = "Check previous Frames \nBonuses & review all scores"
+                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                notifyTeamStartedExtrasPhase(view, 1)
+
+            } else if(teamTwoNeedsExtra){
+                prepareUiForExtra(view)
+                messageSubmitButton = "Check previous Frames \nBonuses & review all scores"
+                frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                notifyTeamStartedExtrasPhase(view, 2)
+            }
+            countSwitchGameToExtraMode++
+            closeKeyboard(view)
+        }
+
+        when(activeTeamNumber){
+            2 -> {
+                if (teamTwoNeedsExtra){
+
+                    if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10){
+
+                        // first click to save data and check previous bonuses
+                        if (!goToOtherTeamExtra){
+
+                            // after filling the Bonus for team2 and clicking submit
+                            messageSubmitButton = "Check previous Frames \nBonuses & review all scores"
+                            frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            firstRollEnabled = false
+                            firstRollFinished =  true
+                            setExtraRollMessage()
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            countTeamTwoExtra++
+                            collectExtraRollAndUpdateTeamTwoBonuses(view)
+                        }
+
+                        // second click to switch to next team if it needs Bonus
+                        if(teamOneNeedsExtra && goToOtherTeamExtra){
+
+                            switchTeamsAndRestartScoring(view)
+                            prepareUiForExtra(view)
+                            messageSubmitButton = "Fill extra Roll #$countTeamOneExtra\nto complete your previous Frames"
+                            frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            notifyTeamStartedExtrasPhase(view, 1)
+                        } else if (teamTwoNeedsExtra && goToOtherTeamExtra){
+                            // stay in Team2 if team2 needs Bonus and team1 doesn't need
+                            prepareUiForExtra(view)
+                            messageSubmitButton = "Fill extra Roll #$countTeamOneExtra\nto complete your previous Frames"
+                            frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            notifyTeamStartedExtrasPhase(view, 2)
+                        }
+
+                        goToOtherTeamExtra = !goToOtherTeamExtra
+
+                        notifyTeamStartedExtrasPhase(view, 2)
+                    }
+                }
+            }
+            1 -> {
+                if(teamOneNeedsExtra){
+
+                    if (!firstRollScore.isEmpty() && firstRollScore.toInt() in 0..10){
+
+                        // first click to save data and check previous bonuses
+                        if (!goToOtherTeamExtra){
+                            save@
+                            messageSubmitButton = "Check previous Frames \nBonuses & review all scores"
+                            frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            firstRollEnabled = false
+                            firstRollFinished =  true
+                            setExtraRollMessage()
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            countTeamOneExtra++
+                            collectExtraRollAndUpdateTeamOneBonuses(view)
+                        }
+
+                        // second click to switch to next team if it needs Bonus
+                        if (teamTwoNeedsExtra && goToOtherTeamExtra){
+
+                            switchTeamsAndRestartScoring(view)
+                            prepareUiForExtra(view)
+                            messageSubmitButton = "Fill extra Roll #$countTeamOneExtra\nto complete your previous Frames"
+                            frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            notifyTeamStartedExtrasPhase(view, 2)
+                        } else if(teamOneNeedsExtra && goToOtherTeamExtra){
+                            // stay in Team1 if Team one still needs Bonuses and Team2 doesn't need
+                            prepareUiForExtra(view)
+                            messageSubmitButton = "Fill extra Roll #$countTeamOneExtra\nto complete your previous Frames"
+                            frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                            notifyChange()
+                            closeKeyboard(view)
+
+                            notifyTeamStartedExtrasPhase(view, 1)
+                        }
+
+                        goToOtherTeamExtra = !goToOtherTeamExtra
+
+                        notifyTeamStartedExtrasPhase(view, 1)
+                    }
+                } else if (teamTwoNeedsExtra){ // the final extra before end of the game
+                    // switch team
+                    switchTeamsAndRestartScoring(view)
+                    prepareUiForExtra(view)
+                    messageSubmitButton = "Fill extra Roll #$countTeamOneExtra\nto complete your previous Frames"
+                    frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
+                    notifyChange()
+                    closeKeyboard(view)
+                }
+            }
+        }
+
+        // show animation result
+        if(!teamOneNeedsExtra && !teamTwoNeedsExtra) {
+
+            prepareUiForExtra(view)
+            firstRollEnabled = false
+            notifyChange()
+
+            disableScreenAndShowResultGameAnimation(view)
+        }
+    }
 
     private fun setExtraRollMessage(){
         when(firstRollScore.toInt()){
-            10 -> firstRollInfo = "Booom! 10 Pins extra... You will \ngive 10 to a previous Frame"
+            10 -> firstRollInfo = "Booom! 10 Pins extra... You will give 10 to a previous Frame"
             in 6..9 -> firstRollInfo = "Good! many points to a Previous Frame"
             in 2..5 -> firstRollInfo = "Not Bad! some points to a Previous Frame"
             in 0..1 -> firstRollInfo = "Ohh ! You missed many Extra points"
         }
     }
-
-
 
     fun prepareUiForExtra(view : View){
         firstRollEnabled = true
@@ -333,7 +345,6 @@ class TrackingScoreActivityViewmodel(
         notifyChange()
         closeKeyboard(view)
     }
-
 
     fun checkIfTeamOneNeedsExtra(){
         for (frame in teamOneFramesList){
@@ -347,29 +358,25 @@ class TrackingScoreActivityViewmodel(
         }
     }
 
-
     fun collectExtraRollAndUpdateTeamOneBonuses(view : View){
-
         var frame : Frame
         for(i in 0..(teamOneFramesList.size - 1)){ // check all the Frames
 
             frame = teamOneFramesList.get(i)
-
             if (frame.needsSecondBonus){
                 val points = firstRollScore.toInt()
                 frame.secondBonusReceived.points = points
                 frame.secondBonusReceived.providerFrame = null
                 frame.secondBonusReceived.providerRollNumber = 0
                 frame.secondBonusReceived.extraNumber = countTeamOneExtra
-                frame.secondBonusReceived.message = "Got $points from: Extra # $countTeamOneExtra"
+                frame.secondBonusReceived.message = "Got $points Points from: Extra # $countTeamOneExtra"
                 frame.needsSecondBonus = false
                 // update the score of the receiver Frame with the new second bonus value
                 frame.score = frame.score + frame.secondBonusReceived.points
 
-                messageFirstBonusGiven = "You just gave $firstRollScore points to Frame #${frame.number}"
+                messageFirstBonusGiven = "Just gave $firstRollScore Points to Frame #${frame.number}, Bonus #2 !"
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
-
                 break
 
             } else if (frame.needsFirstBonus){
@@ -378,44 +385,38 @@ class TrackingScoreActivityViewmodel(
                 frame.firstBonusReceived.providerFrame = null
                 frame.firstBonusReceived.providerRollNumber = 0
                 frame.firstBonusReceived.extraNumber = countTeamTwoExtra
-                frame.firstBonusReceived.message = "Got $points from: Extra # $countTeamTwoExtra"
+                frame.firstBonusReceived.message = "Got $points Points from: Extra # $countTeamTwoExtra"
                 frame.needsFirstBonus = false
                 // update the score of the receiver Frame with the new first bonus value
                 frame.score = frame.score + frame.firstBonusReceived.points
 
-                messageSecondBonusGiven = "You just gave $firstRollScore points to Frame #${frame.number}"
+                messageFirstBonusGiven = "Just gave $firstRollScore Points to Frame #${frame.number}, Bonus #1 !"
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
-
                 break
             }
         }
     }
 
-
-
     fun collectExtraRollAndUpdateTeamTwoBonuses(view : View){
-
         var frame : Frame
         for(i in 0..(teamOneFramesList.size - 1)){ // check all the Frames
 
             frame = teamTwoFramesList.get(i)
-
             if (frame.needsSecondBonus){
                 val points = firstRollScore.toInt()
                 frame.secondBonusReceived.points = points
                 frame.secondBonusReceived.providerFrame = null
                 frame.secondBonusReceived.providerRollNumber = 0
                 frame.secondBonusReceived.extraNumber = countTeamOneExtra
-                frame.secondBonusReceived.message = "Got $points from: Extra # $countTeamOneExtra"
+                frame.secondBonusReceived.message = "Got $points Points from: Extra # $countTeamOneExtra"
                 frame.needsSecondBonus = false
                 // update the score of the receiver Frame with the new second bonus value
                 frame.score = frame.score + frame.secondBonusReceived.points
 
-                messageFirstBonusGiven = "You just gave $firstRollScore points to Frame #${frame.number}"
+                messageFirstBonusGiven = "Just gave $firstRollScore Points to Frame #${frame.number}, Bonus #2 !"
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
-
                 break
 
             } else if (frame.needsFirstBonus){
@@ -424,12 +425,12 @@ class TrackingScoreActivityViewmodel(
                 frame.firstBonusReceived.providerFrame = null
                 frame.firstBonusReceived.providerRollNumber = 0
                 frame.firstBonusReceived.extraNumber = countTeamTwoExtra
-                frame.firstBonusReceived.message = "Got $points from: Extra # $countTeamTwoExtra"
+                frame.firstBonusReceived.message = "Got $points Points from: Extra # $countTeamTwoExtra"
                 frame.needsFirstBonus = false
                 // update the score of the receiver Frame with the new first bonus value
                 frame.score = frame.score + frame.firstBonusReceived.points
 
-                messageSecondBonusGiven = "Just gave $firstRollScore points to Frame ${frame.number} !"
+                messageFirstBonusGiven = "Just gave $firstRollScore Points to Frame #${frame.number}, Bonus #1 !"
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
 
@@ -437,9 +438,6 @@ class TrackingScoreActivityViewmodel(
             }
         }
     }
-
-
-
 
     fun submitEntryWhenFirstRollEqualsTen(view : View){
         // disabled Roll 1 we don't need it anymore
@@ -447,7 +445,7 @@ class TrackingScoreActivityViewmodel(
         firstRollFinished = true
 
         // when the first Roll is Strike then give turn to other team
-        messageSubmitButton = "Save this Frame $frameNumber \nand go to next team ${getActiveTeamName()}"
+        messageSubmitButton = "Save this Frame $frameNumber \ngo to team ${getActiveTeamName()}"
         goToNextTeam = true
         submitEnabled = true
 
@@ -463,20 +461,15 @@ class TrackingScoreActivityViewmodel(
         messageFirstBonusReceived = "You will have a 1st Bonus !"
         messageSecondBonusReceived = "Also... a 2nd Bonus !"
         frameScore = "10"
-        frameTitleInfo= "Frame $frameNumber ------> Score: $frameScore"
+        frameTitleInfo= "Frame # $frameNumber ------> Score: $frameScore"
 
         // add Frame and get reference to it because it's needed to record the source of Bonus
         pageFrame = addFrameObjectToList()
-
         updateBonuses(pageFrame, 1)
-
         calculateScoresForActiveTeamAndOpponentTeam()
-
         closeKeyboard(view)
-
         notifyChange()
     }
-
 
     private fun getActiveTeamName() : String {
         return if (activeTeamNumber == 1) teamTwoName else teamOneName
@@ -506,20 +499,14 @@ class TrackingScoreActivityViewmodel(
         textIsFrameCompleted = "Rolls not completed"
         frameCategory = FrameCategory.DEFAULT.categoryName
         frameScore = firstRollScore
-        frameTitleInfo= "Frame $frameNumber ------> Score: $frameScore"
+        frameTitleInfo= "Frame # $frameNumber ------> Score: $frameScore"
 
         pageFrame = addFrameObjectToList()
-
         updateBonuses(pageFrame, 1)
-
         calculateScoresForActiveTeamAndOpponentTeam()
-
         closeKeyboard(view)
-
         notifyChange()
     }
-
-
 
     fun submitEntryWhenSecondRollEqualsOrLessThanRemaining(view : View){
         // keep Roll 2 but disable it
@@ -532,21 +519,17 @@ class TrackingScoreActivityViewmodel(
         frameScore = (firstRollScore.toInt() + secondRollScore.toInt()).toString()
         frameCategory = if (frameScore.toInt() == 10) FrameCategory.SPARE.categoryName else FrameCategory.CLOSED.categoryName
         messageFirstBonusReceived = if (frameScore.toInt() == 10) "You will have a 1st Bonus !" else ""
-        frameTitleInfo = "Frame $frameNumber ------> Score: $frameScore"
+        frameTitleInfo = "Frame # $frameNumber ------> Score: $frameScore"
 
         // after the 2nd Rolls is enter and user clicks on Button
-        messageSubmitButton = "Save this Frame $frameNumber \nand go to next team ${if (activeTeamNumber == 1) teamTwoName else teamOneName}"
+        messageSubmitButton = "Save this Frame $frameNumber \ngo to team ${if (activeTeamNumber == 1) teamTwoName else teamOneName}"
         goToNextTeam = true
         submitEnabled = true
 
         updatePageFrame(pageFrame)
-
         updateBonuses(pageFrame, 2)
-
         calculateScoresForActiveTeamAndOpponentTeam()
-
         closeKeyboard(view)
-
         notifyChange()
     }
 
@@ -626,6 +609,7 @@ class TrackingScoreActivityViewmodel(
         switchActiveTeam()
         goToNextFrameIfBothTeamsPlayedSameFrameNumber()
         resetModelView()
+        closeKeyboard(view)
     }
 
     private fun switchActiveTeam(){
@@ -649,7 +633,6 @@ class TrackingScoreActivityViewmodel(
         return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
     }
 
-
     private fun resetModelView(){
         firstRollScore = ""
         firstRollInfo = ""
@@ -666,7 +649,7 @@ class TrackingScoreActivityViewmodel(
         goToNextTeam =  false
         submitEnabled = false
 
-        frameTitleInfo = "Frame $frameNumber ------> Score: 0"
+        frameTitleInfo = "Frame # $frameNumber ------> Score: 0"
         frameScore = "0"
         frameCategory = FrameCategory.DEFAULT.categoryName
         textIsFrameCompleted = ""
@@ -681,10 +664,6 @@ class TrackingScoreActivityViewmodel(
 
         notifyChange()
     }
-
-
-
-
 
     private fun calculateScoresForActiveTeamAndOpponentTeam(){
         // by default for team1 we use the ArrayList1 and for team2 we use the ArrayList2
@@ -737,7 +716,6 @@ class TrackingScoreActivityViewmodel(
         }
     }
 
-
     private fun updateBonuses(teamFramesList : ArrayList<Frame>, providerFrame : Frame, providerRollNumber : Int){
         val points = calculateProvidedPoints(providerFrame, providerRollNumber)
         if(teamFramesList.size > 0 && points != 0){
@@ -752,14 +730,14 @@ class TrackingScoreActivityViewmodel(
                     updateReceiverFrameSecondBonusReceived(receiverFrame, points, providerFrame, providerRollNumber)
                     // update the Provider given Bonuses
                     when(providerRollNumber){
-                        1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived)
-                        2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived)
+                        1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived, 2)
+                        2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived, 2)
                     }
                 } else if (receiverFrame.needsFirstBonus){ // this case of Strike OR Spare
                     updateReceiverFrameFirstBonusReceived(receiverFrame, points, providerFrame, providerRollNumber)
                     when(providerRollNumber){
-                        1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived)
-                        2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived)
+                        1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived, 1)
+                        2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived, 1)
                     }
                 }
             }
@@ -771,15 +749,15 @@ class TrackingScoreActivityViewmodel(
                     if (receiverFrame.needsSecondBonus){
                         updateReceiverFrameSecondBonusReceived(receiverFrame, points, providerFrame, providerRollNumber)
                         when(providerRollNumber){
-                            1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived)
-                            2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived)
+                            1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived, 2)
+                            2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.secondBonusReceived, 2)
                         }
                         break
                     } else if (receiverFrame.needsFirstBonus){ // this case of Strike Or Spare
                         updateReceiverFrameFirstBonusReceived(receiverFrame, points, providerFrame, providerRollNumber)
                         when(providerRollNumber){
-                            1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived)
-                            2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived)
+                            1 -> updateProviderFrameFirstBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived, 1)
+                            2 -> updateProviderFrameSecondBonusGiven(providerFrame, receiverFrame.number, receiverFrame.firstBonusReceived, 1)
                         }
                         break
                     }
@@ -789,18 +767,17 @@ class TrackingScoreActivityViewmodel(
         }
     }
 
-    private fun updateProviderFrameFirstBonusGiven(providerFrame : Frame, receiverFrameNumber : Int, receiverFrameBonusReceived : Bonus){
+    private fun updateProviderFrameFirstBonusGiven(providerFrame : Frame, receiverFrameNumber : Int, receiverFrameBonusReceived : Bonus, receiverFrameBonusReceivedNumber : Int){
         providerFrame.firstBonusGiven = receiverFrameBonusReceived
-        providerFrame.firstBonusGiven.message = "You gave ${providerFrame.firstBonusGiven.points} to: Frame: $receiverFrameNumber"
+        providerFrame.firstBonusGiven.message = "1st Roll -> Frame #$receiverFrameNumber \n+${providerFrame.firstBonusGiven.points} as bonus #$receiverFrameBonusReceivedNumber"
         messageFirstBonusGiven = providerFrame.firstBonusGiven.message
     }
 
-    private fun updateProviderFrameSecondBonusGiven(providerFrame : Frame, receiverFrameNumber : Int, receiverFrameBonusReceived : Bonus){
+    private fun updateProviderFrameSecondBonusGiven(providerFrame : Frame, receiverFrameNumber : Int, receiverFrameBonusReceived : Bonus, receiverFrameBonusReceivedNumber : Int){
         providerFrame.secondBonusGiven = receiverFrameBonusReceived
-        providerFrame.secondBonusGiven.message = "You gave ${providerFrame.secondBonusGiven.points} to: Frame: $receiverFrameNumber"
+        providerFrame.secondBonusGiven.message = "2nd Roll -> Frame #$receiverFrameNumber \n+${providerFrame.firstBonusGiven.points} as bonus #$receiverFrameBonusReceivedNumber"
         messageSecondBonusGiven = providerFrame.secondBonusGiven.message
     }
-
 
     private fun calculateProvidedPoints(providerFrame : Frame, providerRollNumber : Int) : Int{
         return if(providerRollNumber == 1) providerFrame.firstRollScore else providerFrame.secondRollScore
@@ -845,7 +822,6 @@ class TrackingScoreActivityViewmodel(
         }
         return totalScore
     }
-
 
     private fun disableScreenAndShowResultGameAnimation(view : View){
         submitEnabled = false
@@ -950,14 +926,13 @@ class TrackingScoreActivityViewmodel(
         return winner
     }
 
-
     fun notifyTeamStartedExtrasPhase(view: View, teamNumber : Int) {
         when(teamNumber){
             1 -> {
                 if(countNotifyTeamOneEntersExtra == 0) {
                     Snackbar.make(
                             view,
-                            "$teamOneName, you entered Extra Rolls Phase !",
+                            "$teamOneName, It's Extra Rolls phase!",
                             Snackbar.LENGTH_LONG).show()
                     countNotifyTeamOneEntersExtra++
                 }
@@ -966,7 +941,7 @@ class TrackingScoreActivityViewmodel(
                 if(countNotifyTeamTwoEntersExtra == 0) {
                     Snackbar.make(
                             view,
-                            "$teamTwoName, you entered Extra Rolls Phase !",
+                            "$teamTwoName, It's Extra Rolls phase!",
                             Snackbar.LENGTH_LONG).show()
                     countNotifyTeamTwoEntersExtra++
                 }
@@ -974,6 +949,5 @@ class TrackingScoreActivityViewmodel(
         }
 
     }
-
 
 }

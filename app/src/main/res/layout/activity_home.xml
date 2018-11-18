@@ -45,6 +45,7 @@
                     android:textSize="15sp"
                     android:paddingLeft="10sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.teamOneName}"/>
@@ -67,6 +68,7 @@
                     android:textSize="15sp"
                     android:paddingLeft="10sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.teamTwoName}"/>
