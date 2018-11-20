@@ -50,8 +50,8 @@ https://www.youtube.com/watch?v=E2d8PizMe-8
 A scenario of a typical game scoring is described here:
 https://www.youtube.com/watch?v=YgIrYUGiVtc 
 
+--------------------  Screenshots -----------------
 
-Screenshots
 Home screen
 ![Jome screen](https://user-images.githubusercontent.com/20923486/48657013-7a881780-ea2c-11e8-88d8-f0cbf201783a.png)
 
