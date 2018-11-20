@@ -12,6 +12,8 @@ I will try to refactor or add some features for better “clean code” and bett
 
 -------------------- The Game --------------------
 
+![bowling_game_cover](https://user-images.githubusercontent.com/20923486/48757534-5da64b00-ec9d-11e8-89d8-8521fc3ee388.jpg)
+
 Scoring the Bowling game needs the players to revisit the previous shots in order to re-calculate the scores. This might become cumbersome when done on papers because the logic is somehow complex. Usually at the Bowling location, the software shows on screen the effect of every new shot on scoring.
 
 Bowling is a game played in 10 Frames. A “Frame” is the turn of a player to try to hit 10 “Pins”. The player has 2 trials, so called “Rolls” to try to knock down the 10 “Pins”.
