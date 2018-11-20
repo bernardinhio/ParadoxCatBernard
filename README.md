@@ -1,3 +1,17 @@
+I developed this App when I was asked by some employers to show an example of my work on the technical, conceptual and architectural level. First of all, the ability to score a Bowling game is not an easy task from the logical level, so this needed a smart algorithm to put in place (see explanation of the game down)
+
+I decided to use Databinding technology that will always notify the observers in the Layout about the changes in logic. I used Kotlin because it is the trendiest language for Android that can be combined with Java. In addition I fell in Love with Kotlin since I was doing the Udemy.com online courses in January 2018 then using it in my new classes. I used the MVVM architecture even for such small number of Activities and Fragments. In the ViewModel I have put all the logic, in the XML I used the ViewModel to set values.
+
+In this App I tried to implement many features to show how I deal with them. I created a cool animation to show the result of the game at the end, it appears in fade in, shakes and go back then fade out showing the result of the competition between the 2 teams.
+
+I also designed some buttons, icons and titles in png using Corel Draw for example, and especially I applied the “reactive programing” approach to constantly change something in the UI (such as hints / messages / colors / icons…) when the user tries to enter something or interact with the page.
+
+I like to implement advanced user experience concepts and UI that really engage with users. It is called “UCD” or user-centered-designs. I believe it is the secret of success of many Apps. It is also part of my Master studies in Usability Engineering and my hobby to explore new concepts and interactions.
+
+I will try to refactor or add some features for better “clean code” and better usability. I do that during my free time only because in regular time I am full time employee 
+
+-------------------- The Game --------------------
+
 Scoring the Bowling game needs the players to revisit the previous shots in order to re-calculate the scores. This might become cumbersome when done on papers because the logic is somehow complex. Usually at the Bowling location, the software shows on screen the effect of every new shot on scoring.
 
 Bowling is a game played in 10 Frames. A “Frame” is the turn of a player to try to hit 10 “Pins”. The player has 2 trials, so called “Rolls” to try to knock down the 10 “Pins”.
