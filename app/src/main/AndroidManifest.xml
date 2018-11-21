@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.TrackingScoreActivityView"></activity>
+        <activity
+            android:name=".view.ReadAboutBowlingGameActivity"
+            android:parentActivityName=".view.HomeActivityView">
+        </activity>
     </application>
 
 </manifest>

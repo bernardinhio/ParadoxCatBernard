@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">ParadoxCat</string>
-    <string name="label_button_starter_activity">Start scoring the Bowling Game!</string>
+    <string name="app_name">Scoring Bowling Game</string>
+    <string name="read_more">(Read more)</string>
+    <string name="welcome_home">Scoring the Bowling game needs the players to revisit the
+        previous shots in order to re-calculate the scores. This might become
+        cumbersome when done on papers because the logic is somehow complex.
+        Usually at the Bowling location, the software shows on screen the effect
+        of every new shot on scoring.</string>
+    <string name="label_button_starter_activity">Start scoring the Game!</string>
 </resources>

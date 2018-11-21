@@ -266,7 +266,6 @@ class TrackingScoreActivityViewmodel(
 
                         // first click to save data and check previous bonuses
                         if (!goToOtherTeamExtra){
-                            save@
                             messageSubmitButton = "Check previous Frames \nBonuses & review all scores"
                             frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
                             firstRollEnabled = false
@@ -363,6 +362,7 @@ class TrackingScoreActivityViewmodel(
         for(i in 0..(teamOneFramesList.size - 1)){ // check all the Frames
 
             frame = teamOneFramesList.get(i)
+
             if (frame.needsSecondBonus){
                 val points = firstRollScore.toInt()
                 frame.secondBonusReceived.points = points
@@ -378,7 +378,6 @@ class TrackingScoreActivityViewmodel(
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
                 break
-
             } else if (frame.needsFirstBonus){
                 val points = firstRollScore.toInt()
                 frame.firstBonusReceived.points = points
@@ -403,6 +402,7 @@ class TrackingScoreActivityViewmodel(
         for(i in 0..(teamOneFramesList.size - 1)){ // check all the Frames
 
             frame = teamTwoFramesList.get(i)
+
             if (frame.needsSecondBonus){
                 val points = firstRollScore.toInt()
                 frame.secondBonusReceived.points = points
@@ -418,7 +418,6 @@ class TrackingScoreActivityViewmodel(
                 calculateScoresForActiveTeamAndOpponentTeam()
                 notifyChange()
                 break
-
             } else if (frame.needsFirstBonus){
                 val points = firstRollScore.toInt()
                 frame.firstBonusReceived.points = points
