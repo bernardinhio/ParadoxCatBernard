@@ -53,16 +53,16 @@ https://www.youtube.com/watch?v=YgIrYUGiVtc
 --------------------  Screenshots -----------------
 
 Home screen
-![Jome screen](https://user-images.githubusercontent.com/20923486/48657013-7a881780-ea2c-11e8-88d8-f0cbf201783a.png)
+![screenshot_1542832534](https://user-images.githubusercontent.com/20923486/48867119-7580ea80-edd5-11e8-91aa-3b81fddeabc5.png)
 
 Frame Strike
-![Strike Frame](https://user-images.githubusercontent.com/20923486/48657034-c1760d00-ea2c-11e8-8f35-cae844f33362.png)
+![screenshot_1542832628](https://user-images.githubusercontent.com/20923486/48867186-aa8d3d00-edd5-11e8-90d5-2f758733486d.png)
 
 Spare Frame
-![Spare Frame](https://user-images.githubusercontent.com/20923486/48657064-31849300-ea2d-11e8-8629-c996df97cc86.png)
+![screenshot_1542832780](https://user-images.githubusercontent.com/20923486/48867291-03f56c00-edd6-11e8-997d-e2197b629e66.png)
 
 Non-special Frame
-![Non-special Frame](https://user-images.githubusercontent.com/20923486/48657305-888b6780-ea2f-11e8-8fbf-7a08ac0a5342.png)
+![screenshot_1542832721](https://user-images.githubusercontent.com/20923486/48867243-da3c4500-edd5-11e8-89b3-5af7e97403d7.png)
 
 Animation result shaking
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
