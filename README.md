@@ -56,10 +56,10 @@ Home screen
 ![screenshot_1542832534](https://user-images.githubusercontent.com/20923486/48867119-7580ea80-edd5-11e8-91aa-3b81fddeabc5.png)
 
 Frame Strike
-![screenshot_1542832628](https://user-images.githubusercontent.com/20923486/48867186-aa8d3d00-edd5-11e8-90d5-2f758733486d.png)
+![screenshot_1542832628](https://user-images.githubusercontent.com/20923486/48997713-2201fa00-f151-11e8-9f9b-86a8ac3286cb.png)
 
 Spare Frame
-![screenshot_1542832780](https://user-images.githubusercontent.com/20923486/48867291-03f56c00-edd6-11e8-997d-e2197b629e66.png)
+![screenshot_1542832780](https://user-images.githubusercontent.com/20923486/48997755-43fb7c80-f151-11e8-99e6-ae533628993c.png)
 
 Non-special Frame
 ![screenshot_1542832721](https://user-images.githubusercontent.com/20923486/48867243-da3c4500-edd5-11e8-89b3-5af7e97403d7.png)
