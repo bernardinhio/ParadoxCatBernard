@@ -4,13 +4,15 @@ The idea of scoring a Bowling game is not an easy task on the logical level, so 
 
 I didn’t except it will be such huge task of programming, but honestly I enjoyed because finally I can put something online about my abilities.
 
-Tech things:
+--------------------  Tech things -------------------- 
 
 I decided to use Databinding technology that will always notify the observers and the Layout about the changes in logic. I used Kotlin because it is the trendiest language for Android right now, but I could have done in Java too, however Kotlin is more powerful and concise. In reality I love it since I was doing the Udemy.com online courses in January 2018. I use it since then then for the new classes. 
 
 I used the MVVM architecture even for such small number of Activities and Fragments. In the ViewModel I have put all the logic (that should also be tested with some Unit tests that I will add later). In the XML I used a viewModel object to get its fields and set them as values in the layout such as color / text / click listeners
 
 In this App I tried to implement many features to show to any employer how I deal with them. But as I said, the whole code needs some “clean code” even it is working perfectly. 
+
+--------------------  Animation -------------------- 
 
 In Summer 2018 is started doing animations, such as for notifications and layouts floating, so I created a cool animation to show the result of the game at the end, it appears in fade in, shakes (rapid short +3degrees rotations left-right), then goes back, then fade out showing the result of the competition between the 2 teams.
 
