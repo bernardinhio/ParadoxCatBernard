@@ -8,5 +8,7 @@ class ReadAboutBowlingGameActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_about_bowling_game)
+
+        title = "How to score hitting Pins?"
     }
 }

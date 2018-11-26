@@ -8,5 +8,5 @@
         android:right="7dp"
         android:bottom="3dp" />
     <corners android:radius="5dp" />
-    <solid android:color="@color/bowling_white" />
+    <solid android:color="@color/bowling_color_sea_blue" />
 </shape>

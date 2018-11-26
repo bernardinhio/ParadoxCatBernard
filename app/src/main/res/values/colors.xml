@@ -7,6 +7,8 @@
     <color name="bowling_gray_color_disabled">#818080</color>
     <color name="bowling_gray_color_pressed">#403636</color>
     <color name="bowling_gray_color_light">#d9d9d9</color>
+    <color name="bowling_gray_color_light2">#cfcfcf</color>
+    <color name="bowling_gray_color_light3">#aaaaaa</color>
     <color name="bowling_yellow">#ffd500</color>
     <color name="bowling_black">#000000</color>
     <color name="bowling_white">#FFFFFF</color>
@@ -16,4 +18,6 @@
     <color name="bowling_color_blue">#0022ff</color>
     <color name="bowling_color_purple">#9f18ff</color>
     <color name="bowling_color_sky_blue">#009b9b</color>
+    <color name="bowling_color_light_blue">#00e8f9</color>
+    <color name="bowling_color_sea_blue">#4ea9ff</color>
 </resources>

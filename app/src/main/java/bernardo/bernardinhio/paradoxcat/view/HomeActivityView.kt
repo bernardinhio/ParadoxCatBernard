@@ -29,7 +29,7 @@ class HomeActivityView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        title = "Score Bowling match"
+        title = "Score hitting Pins"
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
