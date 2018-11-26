@@ -1,16 +1,27 @@
-I developed this App when I was asked by some employers to show an example of my work on the technical, conceptual and architectural level. First of all, the ability to score a Bowling game is not an easy task from the logical level, so this needed a smart algorithm to put in place (see explanation of the game down)
+I started developing this App when I was asked by one employer in Munich and others to show an example of my work such as technical, conceptual and architectural level. As I am employee full time I did the App progressively during early mornings or evenings, and I am still doping it. Sure the code needs cleaning and more optimization for better readability, but the goal is to show my abilities after all. 
 
-I decided to use Databinding technology that will always notify the observers in the Layout about the changes in logic. I used Kotlin because it is the trendiest language for Android that can be combined with Java. In addition I fell in Love with Kotlin since I was doing the Udemy.com online courses in January 2018 then using it in my new classes. I used the MVVM architecture even for such small number of Activities and Fragments. In the ViewModel I have put all the logic, in the XML I used the ViewModel to set values.
+The idea of scoring a Bowling game is not an easy task on the logical level, so this needed a smart algorithm to put in place (see explanation of the game down). In addition when I made the reactive concept, this expanded a lot the code because every action on the UI required feedback or guidance in the flow of the bowling game.
 
-In this App I tried to implement many features to show how I deal with them. I created a cool animation to show the result of the game at the end, it appears in fade in, shakes and go back then fade out showing the result of the competition between the 2 teams.
+I didn’t except it will be such huge task of programming, but honestly I enjoyed because finally I can put something online about my abilities.
 
-I also designed some buttons, icons and titles in png using Corel Draw for example, and especially I applied the “reactive programing” approach to constantly change something in the UI (such as hints / messages / colors / icons…) when the user tries to enter something or interact with the page.
+Tech things:
 
-I like to implement advanced user experience concepts and UI that really engage with users. It is called “UCD” or user-centered-designs. I believe it is the secret of success of many Apps. It is also part of my Master studies in Usability Engineering and my hobby to explore new concepts and interactions.
+I decided to use Databinding technology that will always notify the observers and the Layout about the changes in logic. I used Kotlin because it is the trendiest language for Android right now, but I could have done in Java too, however Kotlin is more powerful and concise. In reality I love it since I was doing the Udemy.com online courses in January 2018. I use it since then then for the new classes. 
 
-I will try to refactor or add some features for better “clean code” and better usability. I do that during my free time only because in regular time I am full time employee 
+I used the MVVM architecture even for such small number of Activities and Fragments. In the ViewModel I have put all the logic (that should also be tested with some Unit tests that I will add later). In the XML I used a viewModel object to get its fields and set them as values in the layout such as color / text / click listeners
 
--------------------- The Game --------------------
+In this App I tried to implement many features to show to any employer how I deal with them. But as I said, the whole code needs some “clean code” even it is working perfectly. 
+
+In Summer 2018 is started doing animations, such as for notifications and layouts floating, so I created a cool animation to show the result of the game at the end, it appears in fade in, shakes (rapid short +3degrees rotations left-right), then goes back, then fade out showing the result of the competition between the 2 teams.
+
+I made a lot of work on the usability of things, such as drawers on enabled and disabled and different styling for background changes and colors
+I also designed some Labels in png using Corel Draw for example. As I applied the “reactive programing” approach to constantly change something in the UI (such as hints / messages / colors / icons…) when the user tries to enter something or interact with the page.
+
+I like to implement advanced user experience concepts and UI that really engage with users. It is my hobby to think of the user-centered-designs. I believe it is the secret of success of many Apps. It is also part of my Master studies in Usability Engineering. I like the Android material design classes.
+
+I will try to refactor or add some features in the future during my free time, meanwhile I suggest to you to install the App and start using it to explore its features.
+
+--------------------  The Game -------------------- 
 
 ![bowling_game_cover](https://user-images.githubusercontent.com/20923486/48757534-5da64b00-ec9d-11e8-89d8-8521fc3ee388.jpg)
 
@@ -50,7 +61,16 @@ https://www.youtube.com/watch?v=E2d8PizMe-8
 A scenario of a typical game scoring is described here:
 https://www.youtube.com/watch?v=YgIrYUGiVtc 
 
---------------------  Screenshots -----------------
+
+--------------------  Major challenges -------------------- 
+
+The first challenge was to be able to put all the logic in one Activity that uses Databinding and allows switching between 2 teams (or 2 players). To think about when switching is allowed or needed, and when the current team / player should continue playing.
+
+Another point is when and how to switch to the phase of getting Extra rolls, and how to show feedback to users about where they are right now in the game, or how their input of score affects the previous “Frames” that they have played before and that are not shown anymore in the current screen.
+
+I decided to make entering score is 2 phases of clicking on a submit button, one for saving the entering score and checking its validity, then showing how it affects the previous Frames, and one last click on the same submit button (with different label) to give the turn to the next player / team and calculate overall scores
+
+--------------------  Screenshots-------------------- 
 
 Home screen
 ![screenshot_1542832534](https://user-images.githubusercontent.com/20923486/48867119-7580ea80-edd5-11e8-91aa-3b81fddeabc5.png)
@@ -66,7 +86,6 @@ Bonus given to previous Frames
 
 ![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png)
 
-
 Animation result shaking
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
 
@@ -77,4 +96,4 @@ Share App
 ![Share App](https://user-images.githubusercontent.com/20923486/48657194-46155b00-ea2e-11e8-8112-8a60368d2d39.png)
 
 stop competition
-![Stop competion](https://user-images.githubusercontent.com/20923486/48657220-73620900-ea2e-11e8-94fc-4e2b9309af68.png)
+![Stop competion](https://user-images.githubusercontent.com/20923486/48657220-73620900-ea2e-11e8-94fc-4e2b9309af68.png) 
