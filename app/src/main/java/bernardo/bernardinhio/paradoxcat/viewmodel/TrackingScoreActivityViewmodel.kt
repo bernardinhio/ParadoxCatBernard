@@ -13,7 +13,6 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import bernardo.bernardinhio.paradoxcat.Bonus
 import bernardo.bernardinhio.paradoxcat.FrameCategory
 import bernardo.bernardinhio.paradoxcat.Frame
 import bernardo.bernardinhio.paradoxcat.R
@@ -53,6 +52,7 @@ class TrackingScoreActivityViewmodel(
         // FirstBonusReceived
         var isBonusOneReceived : Boolean = false,
         var uiMessageFirstBonusReceived : String = "",
+        // use later when the feature of showing each frame with its received bonuses is ready
         var uiFirstBonusReceivedPoints : String = "",
         var uiFirstBonusReceivedProviderRoll : String = "",
         var uiFirstBonusReceivedProviderFrameOrExtra : String = "",
@@ -60,6 +60,7 @@ class TrackingScoreActivityViewmodel(
         // SecondBonusReceived
         var isBonusTwoReceived : Boolean = false,
         var uiMessageSecondBonusReceived : String = "",
+        // use later when the feature of showing each frame with its received bonuses is ready
         var uiSecondBonusReceivedPoints : String = "",
         var uiSecondBonusReceivedProviderRoll : String = "",
         var uiSecondBonusReceivedProviderFrameOrExtra : String = "",
@@ -727,7 +728,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 3 && teamTwoFramesList.size == 3)
+        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
     }
 
     private fun resetModelView(){
