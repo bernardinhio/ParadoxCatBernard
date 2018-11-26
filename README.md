@@ -124,5 +124,4 @@ My scenario 1
 
 --------------------  Espresso test --------------------
 
-In such a project that has quiet complex Logic for calculating scores, I need Espresso Test. I started doing it to test the Activity opening, then I refactored the concept / UI and logic so now I need to add some more test methods. . I was using the 3 tables of the 3 scenarios that I draw on paper and I was manually testing the scoring till now. I have setup the 3 scenarios of Espresso test for 3 matches of Bowling, and I need now to continue developing them
-
+In such a project that has quiet complex Logic for calculating scores, I did Espresso Test. I started doing it to test the Activity opening, and then I refactored the concept / UI and logic. I was using the 3 tables of the 3 scenarios that I draw on paper and I was manually testing the scoring till now. I have setup the 3 scenarios in the Test Class for 3 matches of Bowling, so now I need to add some more test methods during my free time.
