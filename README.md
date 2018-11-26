@@ -4,6 +4,7 @@ The idea of scoring a Bowling game is not an easy task on the logical level, so 
 
 I didn’t except it will be such huge task of programming, but honestly I enjoyed because finally I can put something online about my abilities.
 
+
 --------------------  Tech things -------------------- 
 
 I decided to use Databinding technology that will always notify the observers and the Layout about the changes in logic. I used Kotlin because it is the trendiest language for Android right now, but I could have done in Java too, however Kotlin is more powerful and concise. In reality I love it since I was doing the Udemy.com online courses in January 2018. I use it since then then for the new classes. 
@@ -12,16 +13,18 @@ I used the MVVM architecture even for such small number of Activities and Fragme
 
 In this App I tried to implement many features to show to any employer how I deal with them. But as I said, the whole code needs some “clean code” even it is working perfectly. 
 
---------------------  Animation -------------------- 
-
-In Summer 2018 is started doing animations, such as for notifications and layouts floating, so I created a cool animation to show the result of the game at the end, it appears in fade in, shakes (rapid short +3degrees rotations left-right), then goes back, then fade out showing the result of the competition between the 2 teams.
-
 I made a lot of work on the usability of things, such as drawers on enabled and disabled and different styling for background changes and colors
 I also designed some Labels in png using Corel Draw for example. As I applied the “reactive programing” approach to constantly change something in the UI (such as hints / messages / colors / icons…) when the user tries to enter something or interact with the page.
 
 I like to implement advanced user experience concepts and UI that really engage with users. It is my hobby to think of the user-centered-designs. I believe it is the secret of success of many Apps. It is also part of my Master studies in Usability Engineering. I like the Android material design classes.
 
 I will try to refactor or add some features in the future during my free time, meanwhile I suggest to you to install the App and start using it to explore its features.
+
+
+--------------------  Animation -------------------- 
+
+In Summer 2018 is started doing animations, such as for notifications and layouts floating, so I created a cool animation to show the result of the game at the end, it appears in fade in, shakes (rapid short +3degrees rotations left-right), then goes back, then fade out showing the result of the competition between the 2 teams. (see screenshots down)
+
 
 --------------------  The Game -------------------- 
 
@@ -72,30 +75,54 @@ Another point is when and how to switch to the phase of getting Extra rolls, and
 
 I decided to make entering score is 2 phases of clicking on a submit button, one for saving the entering score and checking its validity, then showing how it affects the previous Frames, and one last click on the same submit button (with different label) to give the turn to the next player / team and calculate overall scores
 
+
 --------------------  Screenshots-------------------- 
 
 Home screen
+
 ![screenshot_1542832534](https://user-images.githubusercontent.com/20923486/48867119-7580ea80-edd5-11e8-91aa-3b81fddeabc5.png)
 
 Frame Strike
+
 ![screenshot_1542832628](https://user-images.githubusercontent.com/20923486/48997713-2201fa00-f151-11e8-9f9b-86a8ac3286cb.png)
 
 Spare Frame
+
 ![screenshot_1542832780](https://user-images.githubusercontent.com/20923486/48997755-43fb7c80-f151-11e8-99e6-ae533628993c.png)
 
 Bonus given to previous Frames
+
 ![screenshot_1543215695](https://user-images.githubusercontent.com/20923486/48997835-86bd5480-f151-11e8-89dd-e1c4092e27a4.png)
 
 ![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png)
 
 Animation result shaking
+
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
 
-Animation result moving fading & moving back
+Animation result shaking / moving fading & moving back
+
 ![Animation result fading & moving back](https://user-images.githubusercontent.com/20923486/48657182-0a7a9100-ea2e-11e8-9a8b-e83804f8c576.png)
 
 Share App
+
 ![Share App](https://user-images.githubusercontent.com/20923486/48657194-46155b00-ea2e-11e8-8112-8a60368d2d39.png)
 
-stop competition
+Stop competition
+
 ![Stop competion](https://user-images.githubusercontent.com/20923486/48657220-73620900-ea2e-11e8-94fc-4e2b9309af68.png) 
+
+
+--------------------  A first / easiest scenario --------------------
+
+When I was developing the logic, it wasn’t easy in the beginning till I made scenario that can be applied on my App, it is one of the most famous, when the player always hits the 10 Pins during the regular game and during all the future Extra rolls that he will have. I made this table on Word and exported in image. 
+
+My scenario 1
+
+![scenario1](https://user-images.githubusercontent.com/20923486/49044007-df7e0300-f1cc-11e8-994e-4f04d6d3081c.jpg)
+
+
+--------------------  Espresso test --------------------
+
+In such a project that has quiet complex Logic for calculating scores, I need Espresso Test. I started doing it to test the Activity opening, then I refactored the concept / UI and logic so now I need to add some more test methods. . I was using the 3 tables of the 3 scenarios that I draw on paper and I was manually testing the scoring till now. I have setup the 3 scenarios of Espresso test for 3 matches of Bowling, and I need now to continue developing them
+
