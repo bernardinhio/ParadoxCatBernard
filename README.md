@@ -100,6 +100,10 @@ Bonus given to previous Frames
 
 ![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png)
 
+Extra Rolls
+
+![5f5f84bf-c80f-4bb7-a7a8-2417f4a86d48](https://user-images.githubusercontent.com/20923486/49045420-3dace500-f1d1-11e8-9467-ed7f47700775.jpg)
+
 Animation result shaking
 
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
