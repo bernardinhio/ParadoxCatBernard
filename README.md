@@ -25,6 +25,10 @@ I will try to refactor or add some features in the future during my free time, m
 
 In Summer 2018 is started doing animations, such as for notifications and layouts floating, so I created a cool animation to show the result of the game at the end, it appears in fade in, shakes (rapid short +3degrees rotations left-right), then goes back, then fade out showing the result of the competition between the 2 teams. (see screenshots down)
 
+Animation result shaking / moving fading & moving back
+
+![Animation result fading & moving back](https://user-images.githubusercontent.com/20923486/48657182-0a7a9100-ea2e-11e8-9a8b-e83804f8c576.png)
+
 
 --------------------  The Game -------------------- 
 
@@ -99,10 +103,6 @@ Bonus given to previous Frames
 Animation result shaking
 
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
-
-Animation result shaking / moving fading & moving back
-
-![Animation result fading & moving back](https://user-images.githubusercontent.com/20923486/48657182-0a7a9100-ea2e-11e8-9a8b-e83804f8c576.png)
 
 Share App
 
