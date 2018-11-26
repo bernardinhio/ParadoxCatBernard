@@ -1,4 +1,4 @@
-I started developing this App when I was asked by one employer in Munich and others to show an example of my work such as technical, conceptual and architectural level. As I am employee full time I did the App progressively during early mornings or evenings, and I am still doping it. Sure the code needs cleaning and more optimization for better readability, but the goal is to show my abilities after all. 
+I started developing this App when I was asked by one employer in Munich and others to show an example of my work such as on the technical, conceptual and architectural level. As I am employee full time I did the App progressively during early mornings or evenings, and I am still doping it. Sure the code needs cleaning and more optimization for better readability, but the goal is to show my abilities after all. 
 
 The idea of scoring a Bowling game is not an easy task on the logical level, so this needed a smart algorithm to put in place (see explanation of the game down). In addition when I made the reactive concept, this expanded a lot the code because every action on the UI required feedback or guidance in the flow of the bowling game.
 
