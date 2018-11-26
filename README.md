@@ -64,6 +64,9 @@ Spare Frame
 Non-special Frame
 ![screenshot_1542832721](https://user-images.githubusercontent.com/20923486/48867243-da3c4500-edd5-11e8-89b3-5af7e97403d7.png)
 
+Bonus given to previous Frames
+![screenshot_1543215695](https://user-images.githubusercontent.com/20923486/48997835-86bd5480-f151-11e8-89dd-e1c4092e27a4.png)
+
 Animation result shaking
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
 
