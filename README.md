@@ -53,16 +53,19 @@ https://www.youtube.com/watch?v=YgIrYUGiVtc
 --------------------  Screenshots -----------------
 
 Home screen
-![Jome screen](https://user-images.githubusercontent.com/20923486/48657013-7a881780-ea2c-11e8-88d8-f0cbf201783a.png)
+![screenshot_1542832534](https://user-images.githubusercontent.com/20923486/48867119-7580ea80-edd5-11e8-91aa-3b81fddeabc5.png)
 
 Frame Strike
-![Strike Frame](https://user-images.githubusercontent.com/20923486/48657034-c1760d00-ea2c-11e8-8f35-cae844f33362.png)
+![screenshot_1542832628](https://user-images.githubusercontent.com/20923486/48997713-2201fa00-f151-11e8-9f9b-86a8ac3286cb.png)
 
 Spare Frame
-![Spare Frame](https://user-images.githubusercontent.com/20923486/48657064-31849300-ea2d-11e8-8629-c996df97cc86.png)
+![screenshot_1542832780](https://user-images.githubusercontent.com/20923486/48997755-43fb7c80-f151-11e8-99e6-ae533628993c.png)
 
-Non-special Frame
-![Non-special Frame](https://user-images.githubusercontent.com/20923486/48657305-888b6780-ea2f-11e8-8fbf-7a08ac0a5342.png)
+Bonus given to previous Frames
+![screenshot_1543215695](https://user-images.githubusercontent.com/20923486/48997835-86bd5480-f151-11e8-89dd-e1c4092e27a4.png)
+
+![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png)
+
 
 Animation result shaking
 ![Animation result shking](https://user-images.githubusercontent.com/20923486/48657147-cf785d80-ea2d-11e8-818a-c29dd5fef11f.png)
