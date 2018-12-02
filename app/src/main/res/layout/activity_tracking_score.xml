@@ -17,7 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5sp">
+
+            <!-- for inflating animation result game-->
             <include layout="@layout/container_animation_congratulation"/>
+
             <ImageView
                 android:id="@+id/my_score_logo"
                 android:layout_width="150dp"
@@ -44,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="@id/if_frame_is_extra"
                 app:layout_constraintLeft_toRightOf="@id/my_score_logo"
-                android:text="@{viewModel.activeTeamTotalScore}"
+                android:text="@{viewModel.uiCurrentTeamTotalScore}"
                 tools:text="My total Score"/>
             <ImageView
                 android:id="@+id/opponent_score_logo"
@@ -70,7 +73,7 @@
                 app:layout_constraintTop_toBottomOf="@id/my_total_score"
                 app:layout_constraintRight_toRightOf="@id/if_frame_is_extra"
                 app:layout_constraintLeft_toRightOf="@id/opponent_score_logo"
-                android:text="@{viewModel.opponentTeamTotalScore}"
+                android:text="@{viewModel.uiOpponentTeamTotalScore}"
                 tools:text="Opponent Score"/>
             <ImageView
                 android:id="@+id/if_frame_is_extra"
@@ -82,7 +85,7 @@
                 app:layout_constraintTop_toTopOf="@id/my_total_score"
                 app:layout_constraintBottom_toBottomOf="@id/opponent_total_score"
                 app:layout_constraintLeft_toRightOf="@id/my_total_score"
-                android:visibility="@{(viewModel.teamOneNeedsExtra || viewModel.teamTwoNeedsExtra) ? View.VISIBLE : View.INVISIBLE}"/>
+                android:visibility="@{(viewModel.uiTeamOneNeedsExtra || viewModel.uiTeamTwoNeedsExtra) ? View.VISIBLE : View.INVISIBLE}"/>
             <Button
                 android:id="@+id/bt_to_other_team"
                 android:layout_width="match_parent"
@@ -99,10 +102,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/opponent_total_score"
-                android:text="@{viewModel.messageSubmitButton}"
-                android:drawableRight="@{(viewModel.goToNextTeam == true) ? @drawable/baseline_repeat_white_18dp : @drawable/baseline_send_white_18dp}"
+                android:text="@{viewModel.uiMessageSubmitButton}"
+                android:drawableRight="@{viewModel.uiGoToNextTeam ? @drawable/baseline_repeat_white_18dp : @drawable/baseline_send_white_18dp}"
                 android:onClick="@{(view) -> viewModel.submitEntry(view)}"
-                android:enabled="@{viewModel.submitEnabled}"
+                android:enabled="@{viewModel.uiSubmitEnabled}"
                 tools:text="Save and go to next player"/>
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/frame_info"
@@ -127,7 +130,7 @@
                     android:textSize="18sp"
                     android:padding="5sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@{viewModel.frameTitleInfo}"
+                    android:text="@{viewModel.uiFrameTitleInfo}"
                     tools:text="Frame number and frame score"/>
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/first_roll"
@@ -145,10 +148,10 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/first_roll_info"
                     app:layout_constraintTop_toBottomOf="@id/current_frame_metrics"
-                    android:background="@{viewModel.firstRollFinished == false ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
-                    android:text="@={viewModel.firstRollScore}"
+                    android:background="@{!viewModel.uiFirstRollFinished ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
+                    android:text="@={viewModel.uiFirstRollScore}"
                     android:afterTextChanged="@{(editable) -> viewModel.afterTextChangedFirstRoll(editable)}"
-                    android:enabled="@{viewModel.firstRollEnabled}"/>
+                    android:enabled="@{viewModel.uiFirstRollEnabled}"/>
                 <TextView
                     android:id="@+id/first_roll_info"
                     android:layout_width="0dp"
@@ -160,7 +163,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/first_roll"
                     app:layout_constraintBottom_toBottomOf="@id/first_roll"
-                    android:text="@{viewModel.firstRollInfo}"
+                    android:text="@{viewModel.uiFirstRollInfo}"
                     tools:text="which frame used it as bonus"/>
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/second_roll"
@@ -177,10 +180,10 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/secon_roll_info"
                     app:layout_constraintTop_toBottomOf="@id/first_roll"
-                    android:background="@{viewModel.secondRollFinished == false ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
-                    android:visibility="@{viewModel.hasSecondRollRight ? View.VISIBLE : View.GONE}"
-                    android:enabled="@{viewModel.secondRollEnabled}"
-                    android:text="@={viewModel.secondRollScore}"
+                    android:background="@{!viewModel.uiSecondRollFinished ? @drawable/rectangle_white_inside_border_black : @drawable/rectangle_light_gray_inside_border_gray}"
+                    android:visibility="@{viewModel.uiHasSecondRollRight ? View.VISIBLE : View.GONE}"
+                    android:enabled="@{viewModel.uiSecondRollEnabled}"
+                    android:text="@={viewModel.uiSecondRollScore}"
                     android:afterTextChanged="@{(editable) -> viewModel.afterTextChangedSecondRoll(editable)}"/>
                 <TextView
                     android:id="@+id/secon_roll_info"
@@ -193,8 +196,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/second_roll"
                     app:layout_constraintBottom_toBottomOf="@id/second_roll"
-                    android:visibility="@{(!viewModel.secondRollInfo.empty &amp;&amp; viewModel.hasSecondRollRight) ? View.VISIBLE : View.GONE}"
-                    android:text="@{viewModel.secondRollInfo}"
+                    android:visibility="@{(!viewModel.uiSecondRollInfo.empty &amp;&amp; viewModel.uiHasSecondRollRight) ? View.VISIBLE : View.GONE}"
+                    android:text="@{viewModel.uiSecondRollInfo}"
                     tools:text="which frame used it as bonus"/>
                 <TextView
                     android:id="@+id/rolls_completed"
@@ -208,8 +211,8 @@
                     android:layout_margin="5sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/second_roll"
-                    android:visibility="@{!viewModel.textIsFrameCompleted.empty ? View.VISIBLE : View.GONE}"
-                    android:text="@{viewModel.textIsFrameCompleted}"
+                    android:visibility="@{!viewModel.uiFrameCompleted.empty ? View.VISIBLE : View.GONE}"
+                    android:text="@{viewModel.uiFrameCompleted}"
                     tools:text="Rolls not completed"/>
                 <TextView
                     android:id="@+id/frame_category"
@@ -224,8 +227,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/rolls_completed"
                     app:layout_constraintBottom_toBottomOf="@id/rolls_completed"
-                    android:visibility="@{!viewModel.frameCategory.empty ? View.VISIBLE : View.GONE}"
-                    android:text="@{viewModel.frameCategory}"
+                    android:visibility="@{!viewModel.uiFrameCategory.empty ? View.VISIBLE : View.GONE}"
+                    android:text="@{viewModel.uiFrameCategory}"
                     tools:text="category"/>
 
                 <LinearLayout
@@ -432,8 +435,6 @@
                     android:text="@{viewModel.uiMessageSecondBonusReceived}"
                     tools:text="second Bonus"/>
 
-
-
                 <LinearLayout
                     android:id="@+id/separator_bonuses_given"
                     android:layout_width="match_parent"
@@ -455,7 +456,6 @@
                     app:layout_constraintTop_toBottomOf="@id/separator_bonuses_given"
                     android:visibility="@{(!viewModel.uiFirstBonusGivenProviderRollOrExtra.empty || !viewModel.uiSecondBonusGivenProviderRollOrExtra.empty) ? View.VISIBLE : View.GONE}"
                     tools:text="label_bonuses_given"/>
-
 
                 <TextView
                     android:id="@+id/provider_roll_or_provider_extra_for_first_bonus_given"
@@ -534,7 +534,6 @@
                     android:visibility="@{!viewModel.uiFirstBonusGivenProviderRollOrExtra.empty ? View.VISIBLE : View.GONE}"
                     android:text="@{viewModel.uiFirstBonusGivenBonusReceiver}"
                     tools:text="B1"/>
-
 
                 <TextView
                     android:id="@+id/provider_roll_or_provider_extra_for_second_bonus_given"
@@ -632,7 +631,7 @@
                 app:layout_constraintTop_toBottomOf="@id/frame_info"
                 android:text="Show Results again!"
                 android:onClick="@{(view) -> viewModel.showAnimationFromButton(view)}"
-                android:visibility="@{viewModel.isButtonReshowAnimationVisible ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.uiIsButtonReshowAnimationVisible ? View.VISIBLE : View.GONE}"
                 tools:text="Show Results again"/>
             </android.support.constraint.ConstraintLayout>²
     </ScrollView>
