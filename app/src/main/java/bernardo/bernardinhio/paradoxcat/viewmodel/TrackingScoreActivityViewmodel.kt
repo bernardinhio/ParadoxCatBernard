@@ -379,18 +379,6 @@ class TrackingScoreActivityViewmodel(
         notifyTeamStartedExtrasPhase(view, 1)
     }
 
-    /**
-    private fun secondClickLastSwitchToTeamTwoExtra(view: View){
-        // the final extra before end of the game
-        switchTeamsAndRestartScoring(view)
-        prepareUiForExtra(view)
-        messageSubmitButton = "Fill extra #$countTeamTwoExtra to complete \nyour previous Frames"
-        frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
-        notifyChange()
-        closeKeyboard(view)
-    }
-    **/
-
     private fun setExtraRollMessage(){
         when(firstRollScore.toInt()){
             10 -> firstRollInfo = "Booom! 10 points bonus to a previous Frame"
@@ -734,7 +722,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 3 && teamTwoFramesList.size == 3)
+        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
     }
 
     private fun resetModelView(){
@@ -1043,9 +1031,9 @@ class TrackingScoreActivityViewmodel(
                 fragment!!.tvResultsTeamOne!!.text = "$teamOneName's score: ${getTotalScoreTeamOneFramesList()}"
                 fragment!!.tvResultsTeamTwo!!.text = "$teamTwoName's score: ${getTotalScoreTeamTwoFramesList()}"
 
-                // animation onClick // close the Actvity
+                // animation onClick // restart the animation
                 containerForFragment!!.setOnClickListener {
-                    trackingScoreActivityView.finish()
+                    containerForFragment!!.startAnimation(animationForFragment)
                 }
             }
             override fun onAnimationEnd(animation: Animation) {
