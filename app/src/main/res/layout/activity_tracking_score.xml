@@ -193,7 +193,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/second_roll"
                     app:layout_constraintBottom_toBottomOf="@id/second_roll"
-                    android:visibility="@{!viewModel.secondRollInfo.empty ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{(!viewModel.secondRollInfo.empty &amp;&amp; viewModel.hasSecondRollRight) ? View.VISIBLE : View.GONE}"
                     android:text="@{viewModel.secondRollInfo}"
                     tools:text="which frame used it as bonus"/>
                 <TextView
@@ -614,7 +614,6 @@
                     android:text="@{viewModel.uiSecondBonusGivenBonusReceiver}"
                     tools:text="B1"/>
 
-
             </android.support.constraint.ConstraintLayout>
             <Button
                 android:id="@+id/bt_show_result_again"
@@ -633,7 +632,7 @@
                 app:layout_constraintTop_toBottomOf="@id/frame_info"
                 android:text="Show Results again!"
                 android:onClick="@{(view) -> viewModel.showAnimationFromButton(view)}"
-                android:visibility="@{(viewModel.isButtonReshowAnimationVisible == true) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.isButtonReshowAnimationVisible ? View.VISIBLE : View.GONE}"
                 tools:text="Show Results again"/>
             </android.support.constraint.ConstraintLayout>²
     </ScrollView>

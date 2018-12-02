@@ -262,7 +262,6 @@ class TrackingScoreActivityViewmodel(
                     // after filling the Bonus for team2 and clicking submit
                     firstClickInputScoreForTeamTwo(view)
                 }
-
                 // second click to switch to next team if it needs Bonus
                 if(teamOneNeedsExtra && goToOtherTeamExtra){
                     secondClickSwitchToTeamOneExtra(view)
@@ -287,9 +286,8 @@ class TrackingScoreActivityViewmodel(
                 if (!goToOtherTeamExtra){
                     firstClickInputScoreForTeamOne(view)
                 }
-
+                // second click to switch to next team if it needs Bonus
                 if (teamTwoNeedsExtra && goToOtherTeamExtra){
-                    // second click to switch to next team if it needs Bonus
                     secondClickSwitchToTeamTwoExtra(view)
                 } else if(teamOneNeedsExtra && goToOtherTeamExtra){
                     // stay in Team1 if Team one still needs Bonuses and Team2 doesn't need
@@ -301,7 +299,8 @@ class TrackingScoreActivityViewmodel(
             }
         } else if (teamTwoNeedsExtra){
             // the final extra before end of the game
-            secondClickLastSwitchToTeamTwoExtra(view)
+            secondClickSwitchToTeamTwoExtra(view)
+            goToOtherTeamExtra = !goToOtherTeamExtra
         }
     }
 
@@ -322,11 +321,10 @@ class TrackingScoreActivityViewmodel(
         // second click to switch to next team if it needs Bonus
         switchTeamsAndRestartScoring(view)
         prepareUiForExtra(view)
-        messageSubmitButton = "Fill extra Roll #$countTeamOneExtra to complete \nyour previous Frames"
+        messageSubmitButton = "Fill Extra #$countTeamOneExtra to complete \nyour previous Frames"
         frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
         notifyChange()
         closeKeyboard(view)
-
         notifyTeamStartedExtrasPhase(view, 1)
     }
 
@@ -345,7 +343,7 @@ class TrackingScoreActivityViewmodel(
 
     private fun firstClickInputScoreForTeamOne(view : View){
         // first click to save data and check previous bonuses
-        messageSubmitButton = "Save this extra # $countTeamOneExtra \nand continue"
+        messageSubmitButton = "Save this Extra # $countTeamOneExtra \nand continue"
         frameTitleInfo= "Extra # $countTeamOneExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
         firstRollEnabled = false
         firstRollFinished =  true
@@ -360,7 +358,7 @@ class TrackingScoreActivityViewmodel(
         // second click to switch to next team if it needs Bonus
         switchTeamsAndRestartScoring(view)
         prepareUiForExtra(view)
-        messageSubmitButton = "Fill extra #$countTeamOneExtra to complete \nyour previous Frames"
+        messageSubmitButton = "Fill extra #$countTeamTwoExtra to complete \nyour previous Frames"
         frameTitleInfo= "Extra # $countTeamTwoExtra -------> Score ${if(firstRollScore.isEmpty()) 0 else firstRollScore}"
         notifyChange()
         closeKeyboard(view)
@@ -381,6 +379,7 @@ class TrackingScoreActivityViewmodel(
         notifyTeamStartedExtrasPhase(view, 1)
     }
 
+    /**
     private fun secondClickLastSwitchToTeamTwoExtra(view: View){
         // the final extra before end of the game
         switchTeamsAndRestartScoring(view)
@@ -390,6 +389,7 @@ class TrackingScoreActivityViewmodel(
         notifyChange()
         closeKeyboard(view)
     }
+    **/
 
     private fun setExtraRollMessage(){
         when(firstRollScore.toInt()){
@@ -411,13 +411,19 @@ class TrackingScoreActivityViewmodel(
 
     fun checkIfTeamOneNeedsExtra(){
         for (frame in teamOneFramesList){
-            teamOneNeedsExtra = (frame.needsSecondBonus || frame.needsFirstBonus)
+            if (frame.needsSecondBonus || frame.needsFirstBonus){
+                teamOneNeedsExtra = true
+                break
+            } else teamOneNeedsExtra = false
         }
     }
 
     fun checkIfTeamTwoNeedsExtra(){
         for (frame in teamTwoFramesList){
-            teamTwoNeedsExtra = (frame.needsSecondBonus || frame.needsFirstBonus)
+            if (frame.needsSecondBonus || frame.needsFirstBonus){
+                teamTwoNeedsExtra = true
+                break
+            } else teamTwoNeedsExtra = false
         }
     }
 
@@ -728,7 +734,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
+        return (teamOneFramesList.size == 3 && teamTwoFramesList.size == 3)
     }
 
     private fun resetModelView(){
