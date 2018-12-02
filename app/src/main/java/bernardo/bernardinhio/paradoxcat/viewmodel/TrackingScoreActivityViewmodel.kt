@@ -719,7 +719,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 3 && teamTwoFramesList.size == 3)
+        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
     }
 
     private fun resetModelView(){
