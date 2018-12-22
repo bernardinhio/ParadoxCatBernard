@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.view
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view
 
 import android.app.Activity
 import android.app.Instrumentation
@@ -8,14 +8,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Assert.*
 import org.junit.Test
-import android.os.Looper
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
 import android.widget.Button
-import bernardo.bernardinhio.paradoxcat.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
 import org.junit.Rule
 import org.junit.runner.RunWith
 

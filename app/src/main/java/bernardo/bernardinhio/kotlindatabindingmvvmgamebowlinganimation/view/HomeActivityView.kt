@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.view
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -12,16 +12,13 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 
-import bernardo.bernardinhio.paradoxcat.R
-import bernardo.bernardinhio.paradoxcat.databinding.ActivityHomeBinding
-import bernardo.bernardinhio.paradoxcat.viewmodel.HomeActivityViewmodel
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.databinding.ActivityHomeBinding
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel.HomeActivityViewmodel
 
 class HomeActivityView : AppCompatActivity() {
 

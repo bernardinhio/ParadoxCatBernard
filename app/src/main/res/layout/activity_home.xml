@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="bernardo.bernardinhio.paradoxcat.viewmodel.HomeActivityViewmodel">
+            type="bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel.HomeActivityViewmodel">
         </variable>
     </data>
     <ScrollView

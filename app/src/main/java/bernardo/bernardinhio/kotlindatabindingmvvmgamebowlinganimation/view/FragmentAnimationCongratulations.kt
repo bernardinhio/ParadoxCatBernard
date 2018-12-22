@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.view
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import bernardo.bernardinhio.paradoxcat.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
 
 class FragmentAnimationCongratulations : Fragment(){
     var tvCongratulationsMessage : TextView? = null

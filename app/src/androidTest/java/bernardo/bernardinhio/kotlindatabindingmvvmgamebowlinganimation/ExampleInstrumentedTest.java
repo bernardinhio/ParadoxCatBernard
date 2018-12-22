@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat;
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("bernardo.bernardinhio.paradoxcat", appContext.getPackageName());
+        assertEquals("bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation", appContext.getPackageName());
     }
 }

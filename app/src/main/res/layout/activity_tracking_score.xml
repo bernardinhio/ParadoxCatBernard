@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="bernardo.bernardinhio.paradoxcat.viewmodel.TrackingScoreActivityViewmodel">
+            type="bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel.TrackingScoreActivityViewmodel">
         </variable>
     </data>
     <ScrollView

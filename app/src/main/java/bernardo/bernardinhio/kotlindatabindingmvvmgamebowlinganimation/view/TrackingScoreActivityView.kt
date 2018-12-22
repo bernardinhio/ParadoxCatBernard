@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.view
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -10,10 +10,10 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
 
-import bernardo.bernardinhio.paradoxcat.R
-import bernardo.bernardinhio.paradoxcat.databinding.ActivityTrackingScoreBinding
-import bernardo.bernardinhio.paradoxcat.viewmodel.HomeActivityViewmodel
-import bernardo.bernardinhio.paradoxcat.viewmodel.TrackingScoreActivityViewmodel
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.databinding.ActivityTrackingScoreBinding
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel.HomeActivityViewmodel
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel.TrackingScoreActivityViewmodel
 
 class TrackingScoreActivityView : AppCompatActivity() {
 
@@ -85,7 +85,7 @@ class TrackingScoreActivityView : AppCompatActivity() {
                 try {
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "text/plain"
-                    val message = "Bowling is a game that makes every phase influence the previous phases \n\n check this amazing App for scoring the Bowing https://github.com/bernardinhio/ParadoxCatBernard"
+                    val message = "Bowling is a game that makes every phase influence the previous phases \n\n check this amazing App for scoring the Bowing https://github.com/bernardinhio/ScorePinsGame"
                     intent.putExtra(Intent.EXTRA_SUBJECT, "Bernard's new App")
                     intent.putExtra(Intent.EXTRA_TEXT, message)
                     this.startActivity(Intent.createChooser(intent, "Share place with"))

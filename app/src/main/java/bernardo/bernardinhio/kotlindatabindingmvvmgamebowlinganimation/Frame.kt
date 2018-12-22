@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation
 
 class Frame(
         val number : Int = 1,

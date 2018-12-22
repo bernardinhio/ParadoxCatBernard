@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.view
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view
 
 import android.app.Activity
 import android.app.Instrumentation
@@ -9,10 +9,9 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.view.View
 import android.widget.Button
-import bernardo.bernardinhio.paradoxcat.Frame
-import bernardo.bernardinhio.paradoxcat.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.Frame
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
 import org.junit.*
 import org.junit.runner.RunWith
 
@@ -98,7 +97,7 @@ class TrackingScoreActivityViewTest {
             "10", "c", "c"
             )
 
-    // scenario provided by paradoxcat
+    // scenario provided by kotlindatabindingmvvmgamebowlinganimation
     val sequenceEntriesAndActionsScenarioTwo : Array<String> = arrayOf(
             // Frame 1
             "1", "c",

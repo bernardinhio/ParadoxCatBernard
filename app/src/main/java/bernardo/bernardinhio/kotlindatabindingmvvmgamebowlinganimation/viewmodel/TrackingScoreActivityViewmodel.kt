@@ -1,4 +1,4 @@
-package bernardo.bernardinhio.paradoxcat.viewmodel
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel
 
 import android.content.Context
 import android.databinding.BaseObservable
@@ -13,12 +13,12 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import bernardo.bernardinhio.paradoxcat.FrameCategory
-import bernardo.bernardinhio.paradoxcat.Frame
-import bernardo.bernardinhio.paradoxcat.R
-import bernardo.bernardinhio.paradoxcat.model.TrackingScoreActivityModel
-import bernardo.bernardinhio.paradoxcat.view.FragmentAnimationCongratulations
-import bernardo.bernardinhio.paradoxcat.view.TrackingScoreActivityView
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.FrameCategory
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.Frame
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.R
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.model.TrackingScoreActivityModel
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view.FragmentAnimationCongratulations
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view.TrackingScoreActivityView
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -719,7 +719,7 @@ class TrackingScoreActivityViewmodel(
     }
 
     private fun didBothTeamsReachedTenFrames() : Boolean{
-        return (teamOneFramesList.size == 10 && teamTwoFramesList.size == 10)
+        return (teamOneFramesList.size == 3 && teamTwoFramesList.size == 3)
     }
 
     private fun resetModelView(){

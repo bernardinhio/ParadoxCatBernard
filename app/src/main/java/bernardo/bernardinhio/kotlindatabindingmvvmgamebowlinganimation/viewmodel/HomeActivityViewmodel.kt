@@ -1,9 +1,8 @@
-package bernardo.bernardinhio.paradoxcat.viewmodel
+package bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.viewmodel
 
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
-import bernardo.bernardinhio.paradoxcat.view.TrackingScoreActivityView
+import bernardo.bernardinhio.kotlindatabindingmvvmgamebowlinganimation.view.TrackingScoreActivityView
 
 class HomeActivityViewmodel(
         var teamOneName : String = "",
