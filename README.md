@@ -119,7 +119,7 @@ Stop competition
 
 --------------------  A first / easiest scenario --------------------
 
-When I was developing the logic, it wasn’t easy in the beginning till I made scenario that can be applied on my App, it is one of the most famous, when the player always hits the 10 Pins during the regular game and during all the future Extra rolls that he will have. I made this table on Word and exported in image. 
+This scenario is the most known scenario that we can find on Internet when we try to learn Bowling. When I was developing the logic, it wasn’t easy in the beginning till I made scenario that can be applied on my App, it is one of the most famous, when the player always hits the 10 Pins during the regular game and during all the future Extra rolls that he will have. I made this table on Word and exported in image. 
 
 My scenario 1
 
@@ -129,3 +129,9 @@ My scenario 1
 --------------------  Espresso test --------------------
 
 In such a project that has quiet complex Logic for calculating scores, I did Espresso Test. I started doing it to test the Activity opening, and then I refactored the concept / UI and logic. I was using the 3 tables of the 3 scenarios that I draw on paper and I was manually testing the scoring till now. I have setup the 3 scenarios in the Test Class for 3 matches of Bowling, so now I need to add some more test methods during my free time.
+
+--------------------  I planned 3 Espresso scenarios for game-----------------
+
+Using one Youtube video that explains the scoring of Bowling, I collected the possible inputs (number of Pins hit) and the output (scores). I compiled these 3 scenarios on a paper because I have to use in my espresso test
+
+![espresso data](https://user-images.githubusercontent.com/20923486/50736495-90a98d00-11be-11e9-9cb3-348c004223a8.JPG)
