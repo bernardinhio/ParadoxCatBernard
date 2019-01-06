@@ -134,4 +134,5 @@ In such a project that has quiet complex Logic for calculating scores, I did Esp
 
 Using one Youtube video that explains the scoring of Bowling, I collected the possible inputs (number of Pins hit) and the output (scores). I compiled these 3 scenarios on a paper because I have to use in my espresso test
 
-![espresso data](https://user-images.githubusercontent.com/20923486/50736495-90a98d00-11be-11e9-9cb3-348c004223a8.JPG)
+![espresso data](https://user-images.githubusercontent.com/20923486/50736687-c0f22b00-11c0-11e9-8272-3afcc79604a1.JPG)
+
