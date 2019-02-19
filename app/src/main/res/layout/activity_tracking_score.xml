@@ -129,6 +129,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="18sp"
                     android:padding="5sp"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="@{viewModel.uiFrameTitleInfo}"
                     tools:text="Frame number and frame score"/>
@@ -265,6 +266,7 @@
                     android:layout_marginTop="10sp"
                     android:visibility="@{(!viewModel.uiMessageFirstBonusReceived.empty || viewModel.isBonusOneReceived) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintTop_toBottomOf="@id/label_bonuses_received"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     tools:text="B1" />
                 <ImageView
                     android:id="@+id/arrow_label_bonus_one_received"
