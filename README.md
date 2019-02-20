@@ -1,6 +1,6 @@
 I started developing this App during free hours because I wanted to show the beauty of the concept of Databinding in Kotlin implemented in an MVVM architecture, but also to show how reactive programing is beautiful, then to show an example of floating layout acting as animation-notification that shows the final result of a game.
 
-Most of the features are done, and the App is 100 working as it is supposed, but there are some parts (features) that I wanted to develop such as reviewing the history of the game and the previous points in previous rounds, are not yet developed. But hopefully one day I will continue working on this project, also refactoring some code to spread it among specialized classes for better readability.
+Most of the features are done, and the App is 100 working as it is supposed, but there are some parts (features) that I wanted to develop such as reviewing the history of the game and the previous points in previous rounds, are not yet developed. But hopefully one day I will continue working on this project, also refactoring some code to spread it among specialized classes for better readability. I also want to continue the different scenarios of Espresso test that I did partially.
 
 The idea of scoring a Bowling game is not an easy task on the logical level, so this needed a smart algorithm to put in place (see explanation of the game down). In addition when I made the reactive concept, this expanded a lot the code because every action on the UI required feedback or guidance in the flow of the bowling game.
 
@@ -98,13 +98,17 @@ Spare Frame
 
 Bonus given to previous Frames
 
-![screenshot_1543215695](https://user-images.githubusercontent.com/20923486/48997835-86bd5480-f151-11e8-89dd-e1c4092e27a4.png)
+![screenshot_1543215695](https://user-images.githubusercontent.com/20923486/48997835-86bd5480-f151-11e8-89dd-e1c4092e27a4.png) 
 
-![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png)
+![screenshot_1543215832](https://user-images.githubusercontent.com/20923486/48997913-d69c1b80-f151-11e8-893c-73d301af528b.png) 
 
-Extra Rolls
+Entering Extra Rolls phase
 
-![5f5f84bf-c80f-4bb7-a7a8-2417f4a86d48](https://user-images.githubusercontent.com/20923486/49045420-3dace500-f1d1-11e8-9467-ed7f47700775.jpg)
+![screenshot_1550652355](https://user-images.githubusercontent.com/20923486/53078433-7fa9a680-34f4-11e9-9b35-cb76f85c039a.png)
+
+Scoring Extra Roll
+
+![screenshot_1550652404](https://user-images.githubusercontent.com/20923486/53078527-aec01800-34f4-11e9-857f-fa29a0334cae.png) 
 
 Animation result shaking
 
