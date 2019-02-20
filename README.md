@@ -1,4 +1,6 @@
-I started developing this App when I was asked by one employer in Munich and others to show an example of my work such as on the technical, conceptual and architectural level. As I am employee full time I did the App progressively during early mornings or evenings, and I am still doping it. Sure the code needs cleaning and more optimization for better readability, but the goal is to show my abilities after all. 
+I started developing this App during free hours because I wanted to show the beauty of the concept of Databinding in Kotlin implemented in an MVVM architecture, but also to show how reactive programing is beautiful, then to show an example of floating layout acting as animation-notification that shows the final result of a game.
+
+Most of the features are done, and the App is 100 working as it is supposed, but there are some parts (features) that I wanted to develop such as reviewing the history of the game and the previous points in previous rounds, are not yet developed. But hopefully one day I will continue working on this project, also refactoring some code to spread it among specialized classes for better readability.
 
 The idea of scoring a Bowling game is not an easy task on the logical level, so this needed a smart algorithm to put in place (see explanation of the game down). In addition when I made the reactive concept, this expanded a lot the code because every action on the UI required feedback or guidance in the flow of the bowling game.
 
@@ -135,4 +137,3 @@ In such a project that has quiet complex Logic for calculating scores, I did Esp
 Using one Youtube video that explains the scoring of Bowling, I collected the possible inputs (number of Pins hit) and the output (scores). I compiled these 3 scenarios on a paper because I have to use in my espresso test
 
 ![espresso data](https://user-images.githubusercontent.com/20923486/50736687-c0f22b00-11c0-11e9-8272-3afcc79604a1.JPG)
-
